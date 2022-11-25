@@ -31,9 +31,16 @@ const formControl =
       genres.unshift({ id: "0", name: "All" });
     }
   
+    let categories = [
+      {label: "Top Rated", value: "top_rated"},
+      {label: "Upcoming Releases", value: "upcoming"},
+      {label: "New Releases", value: "now_playing"}
+    ];
+
     const handleChange = (e, type, value) => {
       e.preventDefault();
-      props.onUserInput(type, value); // NEW
+      props.onUserInput(type, value);
+      props.setState(1);
     };
   
     const handleTextChange = (e, props) => {
@@ -44,8 +51,30 @@ const formControl =
       handleChange(e, "genre", e.target.value);
     };
 
+    const handleCategoryChange = (e) => {
+      handleChange(e, "category", e.target.value);
+    };
+
   return (
     <Typography>
+      <FormControl sx={formControl}>
+        <InputLabel id="category-label">Category</InputLabel>
+        <Select
+          labelId="category-label"
+          id="category-select"
+          defaultValue="top_rated"
+          value={props.categoryFilter}
+          onChange={handleCategoryChange}
+        >
+          {categories.map((category) => {
+            return (
+              <MenuItem key={category.label} value={category.value}>
+                {category.label}
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
       <TextField
         sx={formControl}
         id="filled-search"

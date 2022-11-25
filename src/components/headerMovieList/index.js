@@ -7,6 +7,7 @@ import FilterCard from "../filterMoviesCard";
 const Header = (props) => {
   const title = props.title
   const navigate = useNavigate();
+
   return (
     <Paper 
       component="div" 
@@ -24,6 +25,7 @@ const Header = (props) => {
         onUserInput={props.context.handleChange}
         titleFilter={props.context.nameFilter}
         genreFilter={props.context.genreFilter}
+        setState={props.setState}
       />
 
      {/*  <IconButton aria-label="go back" onClick={() => navigate(-1)}>

@@ -3,18 +3,12 @@ import React, { useContext } from "react";
 import Header from "../headerMovieList";
 import MovieList from "../movieList";
 import PaginationFooter from '../pagination';
-import { ContentFilterContext } from "../../contexts/filteringContext";
 
-function MovieListPageTemplate({ movies, title, setState, action}) {
-  const context = useContext(ContentFilterContext);
-
+function MovieListPageTemplate({ totalPages, page,  movies, title, setState, action, context}) {
   let displayedMovies = movies
     .filter((m) => {
       return m.title.toLowerCase().search(context.nameFilter.toLowerCase()) !== -1;
     })
-    .filter((m) => {
-      return context.genreId > 0 ? m.genre_ids.includes(context.genreId) : true;
-    });
 
   return (
     <div>
@@ -23,13 +17,18 @@ function MovieListPageTemplate({ movies, title, setState, action}) {
         <Header 
         title={title}
         context = {context}
+        setState = {setState}
         />
       </Grid>
       <Grid item container spacing={5}>
         <MovieList action={action} movies={displayedMovies}></MovieList>
       </Grid>
     </Grid>
-    <PaginationFooter setState = {setState}/>
+    <PaginationFooter 
+    setState = {setState}
+    totalPages = {totalPages}
+    page = {page}
+    />
     </div>
   );
 }

@@ -1,6 +1,22 @@
-export const getMovies = (value) => {
+export const getAllMovies = () => {
   return fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&page=${value}`
+    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}`
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error(response.json().message);
+    }
+    return response.json();
+  })
+  .catch((error) => {
+    throw error
+  });
+  };
+
+export const getMoviesOnPage = (page, category = "top_rated",  genre = 0) => {
+  let ge = `https://api.themoviedb.org/3/movie/${category}?api_key=${process.env.REACT_APP_TMDB_KEY}&page=${page}`
+  if (genre > 0) ge = `https://api.themoviedb.org/3/movie/${category}?api_key=${process.env.REACT_APP_TMDB_KEY}&with_genres=${genre}&page=${page}`
+  return fetch(
+    ge
   ).then((response) => {
     if (!response.ok) {
       throw new Error(response.json().message);

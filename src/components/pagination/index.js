@@ -12,8 +12,9 @@ function PaginationFooter(props) {
       }}
       >
     <Pagination 
-    count={200}
+    count={props.totalPages}
     onChange={(event, pageNum) => props.setState(pageNum)}
+    page = {props.page}
     />
     </Paper>
   );
