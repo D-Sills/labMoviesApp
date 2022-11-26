@@ -16,6 +16,17 @@ const formControl =
     backgroundColor: "rgb(255, 255, 255)"
   };
 
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 3.8 + ITEM_PADDING_TOP,
+        width: 220,
+      },
+    },
+  };
+
   export default function FilterMoviesCard(props) {
     const { data, error, isLoading, isError } = useQuery("genres", getGenres);
   
@@ -75,15 +86,6 @@ const formControl =
           })}
         </Select>
       </FormControl>
-      <TextField
-        sx={formControl}
-        id="filled-search"
-        label="Search field"
-        type="search"
-        variant="filled"
-        value={props.titleFilter}
-        onChange={handleTextChange}
-      />
       <FormControl sx={formControl}>
         <InputLabel id="genre-label">Genre</InputLabel>
         <Select
@@ -92,6 +94,7 @@ const formControl =
           defaultValue=""
           value={props.genreFilter}
           onChange={handleGenreChange}
+          MenuProps={MenuProps}
         >
           {genres.map((genre) => {
             return (
@@ -102,6 +105,15 @@ const formControl =
           })}
         </Select>
       </FormControl>
+      <TextField
+        sx={formControl}
+        id="filled-search"
+        label="Search field"
+        type="search"
+        variant="filled"
+        value={props.titleFilter}
+        onChange={handleTextChange}
+      />
       </Typography>
     );
 }
