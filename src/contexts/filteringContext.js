@@ -14,7 +14,9 @@ const ContentFilteringContextProvider = (props) => {
     else setGenreFilter(value);
   };
 
-  function changePage() { //super hacky way to ensure you can
+  function changePage() { //kinda hacky ig but works
+    setCategoryFilter("top_rated");
+    setNameFilter("");
     setGenreFilter(0);
   };
 

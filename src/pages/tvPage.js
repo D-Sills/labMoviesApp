@@ -4,7 +4,7 @@ import { getTVShows, getTVShow } from "../api/tmdb-api";
 import PageTemplate from '../components/templateContentListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
-import AddToFavouritesIcon from '../components/cardIcons/addToFavourites';
+import AddToFavouritesIcon from '../components/cards/cardIcons/addToFavourites';
 import { ContentFilterContext } from "../contexts/filteringContext";
 
 const TVPage = (props) => {

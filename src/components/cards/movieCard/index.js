@@ -11,10 +11,10 @@ import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import img from '../../images/film-poster-placeholder.png'
+import img from '../../../images/film-poster-placeholder.png'
 import Avatar from '@mui/material/Avatar';
 import { Link } from "react-router-dom";
-import { MoviesContext } from "../../contexts/moviesContext";
+import { MoviesContext } from "../../../contexts/moviesContext";
 
 export default function MovieCard({ content, action }) {
   const { favourites, addToFavourites } = useContext(MoviesContext);

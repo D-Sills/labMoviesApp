@@ -2,11 +2,11 @@ import Grid from "@mui/material/Grid";
 import React from "react";
 import Header from "../headerContentList";
 import ContentList from "../contentList";
-import PaginationFooter from '../pagination';
+import Pagination from '../pagination';
 
 function ContentListPageTemplate(props) {
   let displayedContent = props.content;
-  if (props.contentType === 'tv') {
+  if (props.contentType === 'tv' || props.contentType === 'person') {
     displayedContent = props.content
       .filter((m) => {
         return m.name.toLowerCase().search(props.context.nameFilter.toLowerCase()) !== -1;
@@ -21,15 +21,18 @@ function ContentListPageTemplate(props) {
 
   return (
     <div>
+    <Header 
+    title={props.title}
+    context = {props.context}
+    setState = {props.setState}
+    contentType = {props.contentType}
+    />
+    <Pagination
+    setState = {props.setState}
+    totalPages = {props.totalPages}
+    page = {props.page}
+    />
     <Grid container sx={{ padding: '20px' }}>
-      <Grid item xs={12}>
-        <Header 
-        title={props.title}
-        context = {props.context}
-        setState = {props.setState}
-        contentType = {props.contentType}
-        />
-      </Grid>
       <Grid item container spacing={5}>
         <ContentList 
         action={props.action} 
@@ -38,7 +41,7 @@ function ContentListPageTemplate(props) {
         </ContentList>
       </Grid>
     </Grid>
-    <PaginationFooter 
+    <Pagination
     setState = {props.setState}
     totalPages = {props.totalPages}
     page = {props.page}

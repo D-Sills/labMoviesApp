@@ -14,6 +14,7 @@ import AddMovieReviewPage from './pages/addMovieReviewPage'
 import theme from "./themes"
 import { ThemeProvider } from '@mui/material/styles';
 import TVPage from "./pages/tvPage";
+import PeoplePage from "./pages/peoplePage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,7 +41,7 @@ const App = () => {
                 <Route path="/reviews/form" element={<AddMovieReviewPage/>} />
                 <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
               <Route path="/tv/" element={<TVPage />} />
-              <Route path="/people/" element={<MoviesPage />} />
+              <Route path="/people/" element={<PeoplePage />} />
               <Route path="*" element={ <Navigate to="/" /> } />
             </Routes>
           </ContentFilteringContextProvider>
