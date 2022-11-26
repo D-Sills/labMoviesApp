@@ -1,16 +1,15 @@
 import React from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
+import LinearProgress from '@mui/material/LinearProgress';
 
 export default function CircularIndeterminate() {
   return (
     <div sx={{
         display: 'flex',
         justifyContent: "center",
-        '& > * + *': {
-          marginLeft: '2em',
-        }}}>
-      <CircularProgress />
-      <CircularProgress />
+        top: 0,
+        position: 'sticky',
+        }}>
+      <LinearProgress />
     </div>
   );
 }

@@ -43,7 +43,7 @@ export default function MovieCard({ content, action }) {
         }
         title={
           <Typography variant="h5" component="p">
-            {content.title}{" "}
+            {content.name}{" "}
           </Typography>
         }
       />
@@ -60,7 +60,7 @@ export default function MovieCard({ content, action }) {
           <Grid item xs={6}>
             <Typography variant="h6" component="p">
               <CalendarIcon fontSize="small" />
-              {content.release_date}
+              {content.first_air_date}
             </Typography>
           </Grid>
           <Grid item xs={6}>
@@ -72,7 +72,7 @@ export default function MovieCard({ content, action }) {
         </Grid>
       </CardContent>
         {action(content)}
-        <Link to={`/movies/${content.id}`}>
+        <Link to={`/tv/${content.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
           </Button>

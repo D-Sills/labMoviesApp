@@ -1,16 +1,18 @@
+
 import React, { useState, useContext } from "react";
-import { getMoviesOnPage, getAllMovies, getMovies } from "../api/tmdb-api";
+import { getTVShows, getTVShow } from "../api/tmdb-api";
+import PageTemplate from '../components/templateContentListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
-import HomePageHeader from '../components/homePageHeader';
+import AddToFavouritesIcon from '../components/cardIcons/addToFavourites';
 import { ContentFilterContext } from "../contexts/filteringContext";
 
-const HomePage = (props) => {
+const TVPage = (props) => {
   const context = useContext(ContentFilterContext);
   const [page, setPage] = useState(1);
   const {  data, error, isLoading, isError, isFetching, isPreviousData, }  = useQuery({
-    queryKey: [context.categoryFilter, page, context.genreId],
-    queryFn: () => getMoviesOnPage(page, context.categoryFilter, context.genreId),
+    queryKey: ["tv", context.categoryFilter, page, context.genreId],
+    queryFn: () => getTVShows(page, context.categoryFilter, context.genreId),
     keepPreviousData : true
   });
 
@@ -21,12 +23,13 @@ const HomePage = (props) => {
   if (isError) {
     return <h1>{error.message}</h1>
   }  
-  let movies = data.results;
+  window.scrollTo(0, 0);
+  let tvShows = data.results;
   let pages = data.total_pages;
   if (pages > 500) pages = 500; //api call breaks above page 500
 
   // Redundant, but necessary to avoid app crashing.
-  const favourites = movies.filter(m => m.favourite)
+  const favourites = tvShows.filter(m => m.favourite)
   localStorage.setItem('favourites', JSON.stringify(favourites))
   const addToFavourites = (movieId) => true 
 
@@ -37,8 +40,19 @@ const HomePage = (props) => {
   };
 
   return (
-    <HomePageHeader/>
+    <PageTemplate
+      totalPages={pages}
+      title="Discover TV"
+      content={tvShows}
+      page={page}
+      setState={handlePageChange}
+      context={context}
+      contentType = "tv"
+      action={(tvShow) => {
+        return <AddToFavouritesIcon movie={tvShow} />
+      }}
+    />
   );
 };
 
-export default HomePage;
+export default TVPage;

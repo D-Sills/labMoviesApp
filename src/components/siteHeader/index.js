@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -12,13 +12,14 @@ import { styled } from '@mui/material/styles';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MovieIcon from '@mui/icons-material/Movie';
+import { ContentFilterContext } from "../../contexts/filteringContext";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader = ({ history }) => {
+  const context = useContext(ContentFilterContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -28,11 +29,12 @@ const SiteHeader = ({ history }) => {
     { label: "Home", path: "/" },
     { label: "Movies", path: "/movies/" },
     { label: "TV", path: "/tv/" },
-    { label: "Actors", path: "/actors/" },
+    { label: "People", path: "/people/" },
     { label: "Playlists", path: "/" },
   ];
 
   const handleMenuSelect = (pageURL) => {
+    context.changePage();
     navigate(pageURL, { replace: true });
   };
 
@@ -64,12 +66,12 @@ const SiteHeader = ({ history }) => {
                   anchorEl={anchorEl}
                   anchorOrigin={{
                     vertical: "top",
-                    horizontal: "right",
+                    horizontal: "left",
                   }}
                   keepMounted
                   transformOrigin={{
                     vertical: "top",
-                    horizontal: "right",
+                    horizontal: "left",
                   }}
                   open={open}
                   onClose={() => setAnchorEl(null)}

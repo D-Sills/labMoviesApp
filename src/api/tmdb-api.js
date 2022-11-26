@@ -13,6 +13,7 @@ export const getAllMovies = () => {
   };
 
 export const getMoviesOnPage = (page, category = "top_rated",  genre = 0) => {
+  if (category === "on_the_air" || category === "airing_today") category = "top_rated";
   let ge = `https://api.themoviedb.org/3/movie/${category}?api_key=${process.env.REACT_APP_TMDB_KEY}&page=${page}`
   if (genre > 0) ge = `https://api.themoviedb.org/3/movie/${category}?api_key=${process.env.REACT_APP_TMDB_KEY}&with_genres=${genre}&page=${page}`
   return fetch(
@@ -28,9 +29,12 @@ export const getMoviesOnPage = (page, category = "top_rated",  genre = 0) => {
   });
   };
   
-  export const getUpcomingMovies = () => {
+  export const getTVShows = (page, category = "top_rated",  genre = 0) => {
+    if (category === "now_playing" || category === "upcoming") category = "top_rated";
+    let ge = `https://api.themoviedb.org/3/tv/${category}?api_key=${process.env.REACT_APP_TMDB_KEY}&page=${page}`
+    if (genre > 0) ge = `https://api.themoviedb.org/3/tv/${category}?api_key=${process.env.REACT_APP_TMDB_KEY}&with_genres=${genre}&page=${page}`
     return fetch(
-      `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
+      ge
     ).then((response) => {
       if (!response.ok) {
         throw new Error(response.json().message);
@@ -42,6 +46,23 @@ export const getMoviesOnPage = (page, category = "top_rated",  genre = 0) => {
     });
     };
 
+
+    export const getTVShow = (args) => {
+      // console.log(args)
+      const [, idPart] = args.queryKey;
+      const { id } = idPart;
+      return fetch(
+        `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
+      ).then((response) => {
+        if (!response.ok) {
+          throw new Error(response.json().message);
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        throw error
+      });
+    };
 
   export const getMovie = (args) => {
     // console.log(args)
@@ -60,11 +81,9 @@ export const getMoviesOnPage = (page, category = "top_rated",  genre = 0) => {
     });
   };
 
-  export const getGenres = async () => {
+  export const getGenres = async (type) => {
     return fetch(
-      "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
-        process.env.REACT_APP_TMDB_KEY +
-        "&language=en-US"
+      `https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
     ).then( (response) => {
       if (!response.ok) {
         throw new Error(response.json().message);

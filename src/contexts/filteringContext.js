@@ -14,6 +14,10 @@ const ContentFilteringContextProvider = (props) => {
     else setGenreFilter(value);
   };
 
+  function changePage() { //super hacky way to ensure you can
+    setGenreFilter(0);
+  };
+
   return (
     <ContentFilterContext.Provider
       value={{
@@ -22,6 +26,7 @@ const ContentFilteringContextProvider = (props) => {
         genreFilter,
         genreId,
         handleChange,
+        changePage,
       }}
     >
       {props.children}

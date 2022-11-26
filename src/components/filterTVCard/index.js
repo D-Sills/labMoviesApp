@@ -29,10 +29,10 @@ const formControl =
 
   export default function FilterMoviesCard(props) {
     const { data, error, isLoading, isError } = useQuery({
-      queryKey: ["movie genres"],
-      queryFn: () => getGenres("movie"),
+      queryKey: ["tv genres"],
+      queryFn: () => getGenres("tv"),
     });
-  
+    
     if (isLoading) {
       return <Spinner />;
     }
@@ -47,8 +47,8 @@ const formControl =
   
     let categories = [
       {label: "Top Rated", value: "top_rated"},
-      {label: "Upcoming Releases", value: "upcoming"},
-      {label: "New Releases", value: "now_playing"}
+      {label: "On the Air", value: "on_the_air"},
+      {label: "Airing Today", value: "airing_today"}
     ];
 
     const handleChange = (e, type, value) => {
