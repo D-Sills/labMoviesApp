@@ -1,5 +1,5 @@
   body {
-    background-color: #282c34;
+    background-color: #3E4756;
     color: white;
     padding: 20px;
     font-family: Arial;
@@ -19,3 +19,9 @@
     border-radius: 20px;       /* roundness of the scroll thumb */
     outline: 1px solid slategrey;
   }
+  
+  *.MuiCardContent-root {
+    display: flex;
+
+  }
+  

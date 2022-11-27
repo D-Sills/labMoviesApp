@@ -3,6 +3,7 @@ import React from "react";
 import Header from "../headerContentList";
 import ContentList from "../contentList";
 import Pagination from '../pagination';
+import Box from '@mui/material/Box';
 
 function ContentListPageTemplate(props) {
   let displayedContent = props.content;
@@ -32,15 +33,28 @@ function ContentListPageTemplate(props) {
     totalPages = {props.totalPages}
     page = {props.page}
     />
-    <Grid container sx={{ padding: '20px' }}>
-      <Grid item container spacing={5}>
-        <ContentList 
-        action={props.action} 
-        content={displayedContent}
-        contentType = {props.contentType}>
-        </ContentList>
+    
+    <Box sx={{ flexGrow: 1 }} >
+      <Grid container sx={{ 
+      'paddingRight': '20px',
+      'paddingLeft': '20px',
+      'paddingTop': '10px',
+      'paddingBottom': '10px',
+      }}
+      align="center">
+        <Grid item 
+        container spacing={2}
+        xs={12}
+        >
+          <ContentList 
+          action={props.action} 
+          content={displayedContent}
+          contentType = {props.contentType}>
+          </ContentList>
+        </Grid>
       </Grid>
-    </Grid>
+    </Box>
+    
     <Pagination
     setState = {props.setState}
     totalPages = {props.totalPages}

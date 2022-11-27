@@ -72,7 +72,7 @@ export default function PersonCard({ content, action }) {
         </Grid>
       </CardContent>
         {action(content)}
-        <Link to={`/movies/${content.id}`}>
+        <Link to={`/people/${content.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
           </Button>

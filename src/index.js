@@ -11,10 +11,13 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import MoviesContextProvider from "./contexts/moviesContext";
 import ContentFilteringContextProvider from "./contexts/filteringContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage'
-import theme from "./themes"
+import theme from "./styles/themes"
 import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline } from "@mui/material";
 import TVPage from "./pages/tvPage";
 import PeoplePage from "./pages/peoplePage";
+import TVShowPage from "./pages/tvDetailsPage";
+import PersonPage from "./pages/personDetailsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,6 +32,7 @@ const queryClient = new QueryClient({
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
+    <CssBaseline enableColorScheme />
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <MoviesContextProvider>
@@ -41,7 +45,9 @@ const App = () => {
                 <Route path="/reviews/form" element={<AddMovieReviewPage/>} />
                 <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
               <Route path="/tv/" element={<TVPage />} />
+                <Route path="/tv/:id" element={<TVShowPage />} />
               <Route path="/people/" element={<PeoplePage />} />
+                <Route path="/people/:id" element={<PersonPage />} />
               <Route path="*" element={ <Navigate to="/" /> } />
             </Routes>
           </ContentFilteringContextProvider>

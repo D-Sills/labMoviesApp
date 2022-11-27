@@ -1,7 +1,7 @@
 import Pagination from "@mui/material/Pagination";
 import Paper from "@mui/material/Paper";
 
-function PaginationFooter(props) {
+function PaginationIsCool(props) {
   return (
     <Paper 
       sx={{
@@ -20,4 +20,4 @@ function PaginationFooter(props) {
   );
 };
 
-export default PaginationFooter;
+export default PaginationIsCool;

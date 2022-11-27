@@ -65,11 +65,27 @@
       throw error
     });
   };
-
-  export const getGenres = async (type) => {
+  
+  export const getPeople = (page) => {
     return fetch(
-      `https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
-    ).then( (response) => {
+      `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&page=${page}`
+    ).then((response) => {
+      if (!response.ok) {
+        throw new Error(response.json().message);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error
+    });
+  };
+  
+  export const getPerson = (args) => {
+    const [, idPart] = args.queryKey;
+    const { id } = idPart;
+    return fetch(
+      `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
+    ).then((response) => {
       if (!response.ok) {
         throw new Error(response.json().message);
       }
@@ -114,9 +130,9 @@
   /*--------------------------------------------------------------------
   |  Miscellaneous
   *-------------------------------------------------------------------*/
-  export const getPeople = (page) => {
+  export const getTrending = (media_type = "all", time = "week") => {
     return fetch(
-      `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&page=${page}`
+      `https://api.themoviedb.org/3/trending/${media_type}/${time}?api_key=${process.env.REACT_APP_TMDB_KEY}`
     ).then((response) => {
       if (!response.ok) {
         throw new Error(response.json().message);
@@ -127,11 +143,11 @@
       throw error
     });
   };
-
-  export const getTrending = (media_type = "all", time = "week") => {
+  
+  export const getGenres = async (type) => {
     return fetch(
-      `https://api.themoviedb.org/3/trending/${media_type}/${time}?api_key=${process.env.REACT_APP_TMDB_KEY}`
-    ).then((response) => {
+      `https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
+    ).then( (response) => {
       if (!response.ok) {
         throw new Error(response.json().message);
       }

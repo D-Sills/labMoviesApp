@@ -8,24 +8,6 @@ const Header = (props) => {
   const title = props.title
   const contentType = props.contentType
 
-  const renderFilters = () => {
-    if (contentType === 'movie') {
-      return <FilterMoviesCard
-      onUserInput={props.context.handleChange}
-      titleFilter={props.context.nameFilter}
-      genreFilter={props.context.genreFilter}
-      setState={props.setState}
-      />
-    } else {
-      return <FilterTVCard
-      onUserInput={props.context.handleChange}
-      titleFilter={props.context.nameFilter}
-      genreFilter={props.context.genreFilter}
-      setState={props.setState}
-      />
-    }
-  }
-
   return (
     <Paper 
       component="div" 
@@ -40,7 +22,19 @@ const Header = (props) => {
         {title}
       </Typography>
       {
-        renderFilters()
+      contentType === 'movie' ? (
+        <FilterMoviesCard
+        onUserInput={props.context.handleChange}
+        titleFilter={props.context.nameFilter}
+        genreFilter={props.context.genreFilter}
+        setState={props.setState}
+        />
+      ):<FilterTVCard
+        onUserInput={props.context.handleChange}
+        titleFilter={props.context.nameFilter}
+        genreFilter={props.context.genreFilter}
+        setState={props.setState}
+        />
       }
     </Paper>
   );
