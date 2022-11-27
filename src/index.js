@@ -16,7 +16,7 @@ import TVPage from "./pages/tvPage";
 import PeoplePage from "./pages/peoplePage";
 import TVShowPage from "./pages/tvDetailsPage";
 import PersonPage from "./pages/personDetailsPage";
-import ThemeContextProvider from "./contexts/themeContext";
+import AuthenticationContextProvider from "./contexts/authenticationContext";
 import { lightTheme, darkTheme } from "./styles/themes";
 
 const queryClient = new QueryClient({
@@ -48,7 +48,7 @@ const App = () => {
   return (
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <ThemeContextProvider>
+          <AuthenticationContextProvider>
           <UserListProvider>
           <ContentFilteringContextProvider>
           <ThemeProvider theme={theme}>
@@ -68,7 +68,7 @@ const App = () => {
           </ThemeProvider>
           </ContentFilteringContextProvider>
           </UserListProvider>
-          </ThemeContextProvider>
+          </AuthenticationContextProvider>
         </BrowserRouter>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

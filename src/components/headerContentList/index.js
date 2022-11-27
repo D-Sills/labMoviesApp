@@ -10,7 +10,6 @@ const Header = (props) => {
 
   return (
     <Paper 
-      component="div" 
       sx={{
         display: "flex",
         justifyContent: "space-around",

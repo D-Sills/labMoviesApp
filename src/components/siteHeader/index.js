@@ -13,20 +13,29 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MovieIcon from '@mui/icons-material/Movie';
 import { ContentFilterContext } from "../../contexts/filteringContext";
+import { AuthenticationContext } from "../../contexts/authenticationContext";
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
+import Avatar from '@mui/material/Avatar';
+import RegisterModal from "../authentication/register";
+import LoginModal from "../authentication/login";
+import ResetModal from "../authentication/reset";
+import AccountMenu from "../accountMenu";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader = (props) => {
   const filterContext = useContext(ContentFilterContext);
+  const authContext = useContext(AuthenticationContext);
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const openBurgerMenu = Boolean(anchorEl);
+  const [anchorE2, setAnchorE2] = useState(null);
+  const openAccountMenu = Boolean(anchorE2);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
+  const [modalIndex, setModalIndex] = useState(0);
   const navigate = useNavigate();
 
   const menuOptions = [
@@ -41,8 +50,29 @@ const SiteHeader = (props) => {
     navigate(pageURL, { replace: true });
   };
 
-  const handleMenu = (event) => {
+  const handleBurgerMenu = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+  
+  const handleAccountMenu = (event) => {
+    setAnchorE2(event.currentTarget);
+  };
+  
+  const sethandleCloseModal = (v) => {
+    setModalIndex(v);
+  };
+  
+  const handleCloseModal = () => {
+    setModalIndex(0);
+  };
+  const handleOpenLogModal = () => {
+    setModalIndex(1);
+  };
+  const handleOpenRegModal = () => {
+    setModalIndex(2);
+  };
+  const handleOpenResetModal = () => {
+    setModalIndex(3);
   };
 
   return (
@@ -63,7 +93,7 @@ const SiteHeader = (props) => {
                   aria-label="menu"
                   aria-controls="menu-appbar"
                   aria-haspopup="true"
-                  onClick={handleMenu}
+                  onClick={handleBurgerMenu}
                   color="inherit"
                 >
                   <MenuIcon />
@@ -80,7 +110,7 @@ const SiteHeader = (props) => {
                     vertical: "top",
                     horizontal: "left",
                   }}
-                  open={open}
+                  open={openBurgerMenu}
                   onClose={() => setAnchorEl(null)}
                 >
                   {menuOptions.map((opt) => (
@@ -122,7 +152,49 @@ const SiteHeader = (props) => {
           ><LightModeIcon  /></IconButton>
           }
           </Tooltip>
+          {
+          authContext.user ? (
+          <IconButton
+          aria-label="menu"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleAccountMenu}
+          color="inherit"
+          >
+          <Avatar sx={{ backgroundColor: 'red' }}>
+          </Avatar>
+          </IconButton>
+          
+          ) : 
+          <Button
+            key="Login"
+            color="inherit" 
+            onClick={() => setModalIndex(1)}
+          >Login
+          </Button>
+          }
           </Box>
+          
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorE2}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={openAccountMenu}
+            onClose={() => setAnchorE2(null)}
+          >
+          <AccountMenu context = {authContext}/>
+          </Menu>
+          <LoginModal context={authContext} setIndex={setModalIndex} index={modalIndex}/>
+          <RegisterModal context={authContext} setIndex={setModalIndex} index={modalIndex}/>
+          <ResetModal context={authContext} setIndex={setModalIndex} index={modalIndex}/>
           
         </Toolbar>
       </AppBar>
