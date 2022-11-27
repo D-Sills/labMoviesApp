@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {createRoot} from "react-dom/client";
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import HomePage from "./pages/homePage";
@@ -8,16 +8,16 @@ import MovieReviewPage from "./pages/movieReviewPage";
 import SiteHeader from './components/siteHeader'
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
-import MoviesContextProvider from "./contexts/moviesContext";
+import UserListProvider from "./contexts/userListsContext";
 import ContentFilteringContextProvider from "./contexts/filteringContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage'
-import theme from "./styles/themes"
 import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline } from "@mui/material";
 import TVPage from "./pages/tvPage";
 import PeoplePage from "./pages/peoplePage";
 import TVShowPage from "./pages/tvDetailsPage";
 import PersonPage from "./pages/personDetailsPage";
+import ThemeContextProvider from "./contexts/themeContext";
+import { lightTheme, darkTheme } from "./styles/themes";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,14 +30,29 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  const [theme, setTheme] = useState(lightTheme);
+  useEffect(() => {
+    window.matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', event => {
+        const colorScheme = event.matches ? "dark" : "light";
+        colorScheme === "light" ? setTheme(lightTheme) : setTheme(darkTheme); 
+        console.log(colorScheme);
+        setTheme(colorScheme);
+      });
+  }, []);
+  
+  const changeTheme = () => {
+    theme === lightTheme ? setTheme(darkTheme) : setTheme(lightTheme);
+  };
+  
   return (
-    <ThemeProvider theme={theme}>
-    <CssBaseline enableColorScheme />
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <MoviesContextProvider>
+          <ThemeContextProvider>
+          <UserListProvider>
           <ContentFilteringContextProvider>
-          <SiteHeader />      {/* New Header  */}
+          <ThemeProvider theme={theme}>
+          <SiteHeader theme = {theme} changeTheme={changeTheme} lightMode = {lightTheme}/>    
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/movies/" element={<MoviesPage />} />
@@ -50,12 +65,14 @@ const App = () => {
                 <Route path="/people/:id" element={<PersonPage />} />
               <Route path="*" element={ <Navigate to="/" /> } />
             </Routes>
+          </ThemeProvider>
           </ContentFilteringContextProvider>
-          </MoviesContextProvider>
+          </UserListProvider>
+          </ThemeContextProvider>
         </BrowserRouter>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
-    </ThemeProvider>
+    
   );
 };
 

@@ -13,11 +13,15 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MovieIcon from '@mui/icons-material/Movie';
 import { ContentFilterContext } from "../../contexts/filteringContext";
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
-const SiteHeader = ({ history }) => {
-  const context = useContext(ContentFilterContext);
+const SiteHeader = (props) => {
+  const filterContext = useContext(ContentFilterContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const theme = useTheme();
@@ -30,11 +34,10 @@ const SiteHeader = ({ history }) => {
     { label: "Movies", path: "/movies/" },
     { label: "TV", path: "/tv/" },
     { label: "People", path: "/people/" },
-    { label: "Playlists", path: "/" },
   ];
 
   const handleMenuSelect = (pageURL) => {
-    context.changePage();
+    filterContext.changePage();
     navigate(pageURL, { replace: true });
   };
 
@@ -45,13 +48,17 @@ const SiteHeader = ({ history }) => {
   return (
     <>
       <AppBar position="fixed" color="primary">
-        <Toolbar>
+      <Toolbar >
           <Typography variant="h4" sx={{ flexGrow: 1 }}>
-            <MovieIcon  /> MovieTMDB Client
+          <IconButton
+                  onClick={() => handleMenuSelect("Home")}
+                  color="inherit"
+                ><MovieIcon  /> MovieTMDB Client </IconButton>
           </Typography>
 
             {isMobile ? (
               <>
+              <Box sx={{ flexGrow: 20}} >
                 <IconButton
                   aria-label="menu"
                   aria-controls="menu-appbar"
@@ -85,9 +92,10 @@ const SiteHeader = ({ history }) => {
                     </MenuItem>
                   ))}
                 </Menu>
+                </Box>
               </>
             ) : (
-              <>
+              <Box sx={{ flexGrow: 20}} >
                 {menuOptions.map((opt) => (
                   <Button
                     key={opt.label}
@@ -97,11 +105,28 @@ const SiteHeader = ({ history }) => {
                     {opt.label}
                   </Button>
                 ))}
-              </>
+              </Box>
             )}
+            
+          <Box>
+          <Tooltip title="Toggle Site Theme">
+          {
+          props.theme === props.lightMode ? (<IconButton
+            onClick={props.changeTheme}
+            color="white"
+          ><DarkModeIcon  /></IconButton>) 
+          : 
+          <IconButton
+            onClick={props.changeTheme}
+            color="white"
+          ><LightModeIcon  /></IconButton>
+          }
+          </Tooltip>
+          </Box>
+          
         </Toolbar>
       </AppBar>
-      <Offset />
+      <Offset/>
     </>
   );
 };

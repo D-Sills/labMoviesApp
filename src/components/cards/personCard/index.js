@@ -14,10 +14,10 @@ import Grid from "@mui/material/Grid";
 import img from '../../../images/film-poster-placeholder.png'
 import Avatar from '@mui/material/Avatar';
 import { Link } from "react-router-dom";
-import { MoviesContext } from "../../../contexts/moviesContext";
+import { UserLists } from "../../../contexts/userListsContext";
 
 export default function PersonCard({ content, action }) {
-  const { favourites, addToFavourites } = useContext(MoviesContext);
+  const { favourites, addToFavourites } = useContext(UserLists);
  
    if (favourites.find((id) => id === content.id)) {
     content.favourite = true;

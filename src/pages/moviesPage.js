@@ -28,11 +28,6 @@ const MoviesPage = (props) => {
   let pages = data.total_pages;
   if (pages > 500) pages = 500; //api call breaks above page 500
 
-  // Redundant, but necessary to avoid app crashing.
-  const favourites = movies.filter(m => m.favourite)
-  localStorage.setItem('favourites', JSON.stringify(favourites))
-  const addToFavourites = (movieId) => true 
-
   const handlePageChange = (val) => { 
     if (page === val) return;
     else
@@ -48,9 +43,6 @@ const MoviesPage = (props) => {
       setState={handlePageChange}
       context={context}
       contentType = "movie"
-      action={(movie) => {
-        return <AddToFavouritesIcon movie={movie} />
-      }}
     />
   );
 };

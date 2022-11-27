@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useForm, Controller } from "react-hook-form";
-import { MoviesContext } from "../../contexts/moviesContext";
+import { UserLists } from "../../contexts/userListsContext";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles";
 import ratings from "./ratingCategories";
@@ -26,7 +26,7 @@ const ReviewForm = ({ movie }) => {
     reset,
   } = useForm(defaultValues);
   const navigate = useNavigate();
-  const context = useContext(MoviesContext);
+  const context = useContext(UserLists);
   const [rating, setRating] = useState(3);
   const [open, setOpen] = React.useState(false);  //NEW
 
