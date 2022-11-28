@@ -144,6 +144,20 @@
     });
   };
   
+  export const searchDB = (media_type = "multi", query = "") => {
+    return fetch(
+      `https://api.themoviedb.org/3/search/${media_type}?api_key=${process.env.REACT_APP_TMDB_KEY}&query=${query}`
+    ).then((response) => {
+      if (!response.ok) {
+        throw new Error(response.json().message);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error
+    });
+  };
+  
   export const getGenres = async (type) => {
     return fetch(
       `https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`

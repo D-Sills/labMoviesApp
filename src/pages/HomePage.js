@@ -1,18 +1,26 @@
-import React, { useState, useContext } from "react";
-import HomePageHeader from '../components/homePageHeader';
-import HomePageContent from '../components/homePageContent';
-import { getTrending } from "../api/tmdb-api";
-import { useQuery } from 'react-query';
-import Spinner from '../components/spinner';
 import { Box, Typography } from "@mui/material";
-import Grid from "@mui/material/grid";
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Stack from '@mui/material/Stack';
+import { styled } from "@mui/material/styles";
+import MuiToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import React, { useState } from "react";
+import { useQuery } from 'react-query';
+import { getTrending } from "../api/tmdb-api";
+import HomePageContent from '../components/homePageContent';
+import HomePageHeader from '../components/homePageHeader';
+import Spinner from '../components/spinner';
+
+const ToggleButton = styled(MuiToggleButton) ({
+    '&.Mui-selected, &.Mui-selected:hover': {
+        color: '#ffff',
+        backgroundColor: '#00ff00',
+    },
+});
 
 const HomePage = (props) => {
     const [type, setType] = useState("all");
     const [time, setTime] = useState("week");
+    
     const { data, error, isLoading, isError, isFetching, isPreviousData, }  = useQuery({
         queryKey: ["trending", type, time],
         queryFn: () => getTrending(type, time),
@@ -29,6 +37,7 @@ const HomePage = (props) => {
     window.scrollTo(0, 0);
     let trending = data.results;
 
+    
     const handleTimeToggle = (event, newTime) => {
         if (newTime !== null) {
             setTime(newTime);
@@ -37,7 +46,7 @@ const HomePage = (props) => {
 
     return (
     <div>
-    <HomePageHeader/>
+    <HomePageHeader />
     <Box sx={{ 'paddingRight': '20px',
     'paddingLeft': '20px',
     'paddingTop': '60px',
@@ -49,15 +58,14 @@ const HomePage = (props) => {
     </Typography>  
     
     <ToggleButtonGroup
-        value={type}
-        exclusive
+        value={time}
+        exclusive={true}
         onChange={handleTimeToggle}
-        aria-label="text alignment"
     >
-    <ToggleButton value="day" aria-label="left aligned">
+    <ToggleButton value="day">
         day
     </ToggleButton>
-    <ToggleButton value="week" aria-label="centered">
+    <ToggleButton value="week">
         week
     </ToggleButton>
     </ToggleButtonGroup>
