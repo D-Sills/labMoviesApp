@@ -8,7 +8,7 @@ const ContentList = ( {content, action, contentType }) => {
   if (contentType === 'tv') {
     let contentCards = content.map((m) => (
       <Grid key={m.id} item xs={12} sm={6} md={4} lg={3} xl={2}>
-        <TVCard key={m.id} content={m} action={action} />
+        <TVCard key={m.id} content={m} />
       </Grid>
     ));
     return contentCards;
@@ -16,7 +16,7 @@ const ContentList = ( {content, action, contentType }) => {
   else if (contentType === 'movie') {
     let contentCards = content.map((m) => (
       <Grid key={m.id} item xs={12} sm={6} md={4} lg={3} xl={2}>
-        <MovieCard key={m.id} content={m} action={action} />
+        <MovieCard key={m.id} content={m}  />
       </Grid>
     ));
     return contentCards;
@@ -24,7 +24,7 @@ const ContentList = ( {content, action, contentType }) => {
   else if (contentType === 'person') {
     let contentCards = content.map((m) => (
       <Grid key={m.id} item xs={12} sm={6} md={4} lg={3} xl={2}>
-        <PersonCard key={m.id} content={m} action={action} />
+        <PersonCard key={m.id} content={m}  />
       </Grid>
     ));
     return contentCards;

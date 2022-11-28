@@ -1,82 +1,141 @@
-import React, { useContext  } from "react";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import Avatar from '@mui/material/Avatar';
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import CardHeader from "@mui/material/CardHeader";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
-import StarRateIcon from "@mui/icons-material/StarRate";
-import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import img from '../../../images/film-poster-placeholder.png'
-import Avatar from '@mui/material/Avatar';
+import Typography from "@mui/material/Typography";
+import { format } from 'date-fns';
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserLists } from "../../../contexts/userListsContext";
+import { AuthenticationContext } from "../../../contexts/authenticationContext";
+import img from '../../../images/film-poster-placeholder.png';
+import ContextMenu from "../contextMenu";
+import Menu from "@mui/material/Menu";
+import IconButton from "@mui/material/IconButton";
+import TheaterComedyTwoToneIcon from '@mui/icons-material/TheaterComedyTwoTone';
 
-export default function PersonCard({ content, action }) {
-  const { favourites, addToFavourites } = useContext(UserLists);
- 
-   if (favourites.find((id) => id === content.id)) {
-    content.favourite = true;
-   } else {
-    content.favourite = false
-   }
- 
-   const handleAddToFavourite = (e) => {
-     e.preventDefault();
-     addToFavourites(content);
-   };
- 
+export default function PersonCard({ content }) {
+  const userContext = useContext(UserLists)
+  const authContext = useContext(AuthenticationContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  let menuOpen = false;
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
-        avatar={
-          content.favourite ? (
-            <Avatar sx={{ backgroundColor: 'red' }}>
-              <FavoriteIcon />
-            </Avatar>
-          ) : null
-        }
-        title={
+<Card sx={{ 
+    mainWidth: 350, 
+    maxWidth: 350, 
+    minHeight: 450,
+    maxHeight: 450,
+    boxShadow: 3,
+    }} align="left" 
+    >
+    
+    <div style={{ position: "relative" }}>
+    <div style={{position: "absolute", top: 10, left: 10,}}>
+    {
+      content.favourite ? (
+        <IconButton
+        onClick={userContext.addToFavourites(content)}
+        >
+        <Avatar sx={{ backgroundColor: 'red' }}>
+          <FavoriteIcon />
+        </Avatar>
+        </IconButton>
+      ) : null
+    }
+    </div>
+    
+    <div style={{position: "absolute", bottom: 5, right: 10,}}>
+
+          <TheaterComedyTwoToneIcon />
+  
+    </div>
+    
+    
+    <div style={{position: "absolute", top: 10, right: 10,}}>
+    {
+      menuOpen ? (
+        null
+      ):<Avatar sx={{ 
+        backgroundColor: 'rgba(255,255,255,0.5)' ,
+        color: 'rgba(0,0,0,0.5)',
+        height: '30px',
+        width: '30px'
+        }}>
+        <IconButton
+          aria-label="menu"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleMenu}
+          color="inherit"
+          >
+            <MoreHorizIcon />
+          </IconButton>
+        </Avatar>
+    }
+    <Menu
+      id="menu-appbar"
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={open}
+      onClose={() => setAnchorEl(null)}
+    >
+    <ContextMenu
+      userContext = {userContext}
+      authContext = {authContext}
+      content = {content}
+    />
+    </Menu>
+    </div>
+    
+    <Link to={"/people/"+ content.id}>
+    <CardMedia 
+      sx={{ 
+      minHeight: 320,
+      maxHeight: 320,
+      objectFit: "fill" }}
+      component="img"
+      image={
+        content.profile_path
+          ? `https://image.tmdb.org/t/p/w500/${content.profile_path}`
+          : img
+      }
+    />
+    </Link>
+    </div>
+    
+    <CardContent sx={{ paddingTop: '35px'}}>
+      <Grid container>
+        <Grid item xs={12} >
           <Typography variant="h5" component="p">
-            {content.name}{" "}
+          <b>{content.name}</b>
           </Typography>
-        }
-      />
-      <CardMedia
-        sx={{ height: 500 }}
-        image={
-          content.profile_path
-            ? `https://image.tmdb.org/t/p/w500/${content.profile_path}`
-            : img
-        }
-      />
-      <CardContent>
-        <Grid container>
-          <Grid item xs={6}>
-            <Typography variant="h6" component="p">
-              <CalendarIcon fontSize="small" />
-              {content.birthday}
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="h6" component="p">
-              <StarRateIcon fontSize="small" />
-              {"  "} {content.popularity}{" "}
-            </Typography>
-          </Grid>
         </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h7" component="p">
+            {content.known_for_department}
+          </Typography>
+        </Grid>
+      </Grid> 
       </CardContent>
-        {action(content)}
-        <Link to={`/people/${content.id}`}>
-          <Button variant="outlined" size="medium" color="primary">
-            More Info ...
-          </Button>
-        </Link>
+      
     </Card>
   );
 }

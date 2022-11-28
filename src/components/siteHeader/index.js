@@ -33,9 +33,8 @@ const SiteHeader = (props) => {
   const openBurgerMenu = Boolean(anchorEl);
   const [anchorE2, setAnchorE2] = useState(null);
   const openAccountMenu = Boolean(anchorE2);
-  const theme = useTheme();
+  const theme = useTheme(props.theme);
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [modalIndex, setModalIndex] = useState(0);
   const navigate = useNavigate();
 
   const menuOptions = [
@@ -57,27 +56,10 @@ const SiteHeader = (props) => {
   const handleAccountMenu = (event) => {
     setAnchorE2(event.currentTarget);
   };
-  
-  const sethandleCloseModal = (v) => {
-    setModalIndex(v);
-  };
-  
-  const handleCloseModal = () => {
-    setModalIndex(0);
-  };
-  const handleOpenLogModal = () => {
-    setModalIndex(1);
-  };
-  const handleOpenRegModal = () => {
-    setModalIndex(2);
-  };
-  const handleOpenResetModal = () => {
-    setModalIndex(3);
-  };
 
   return (
     <>
-      <AppBar position="fixed" color="primary">
+      <AppBar position="fixed" color="neutral">
       <Toolbar >
           <Typography variant="h4" sx={{ flexGrow: 1 }}>
           <IconButton
@@ -169,13 +151,27 @@ const SiteHeader = (props) => {
           <Button
             key="Login"
             color="inherit" 
-            onClick={() => setModalIndex(1)}
+            onClick={() => authContext.setModalIndex(1)}
           >Login
           </Button>
           }
           </Box>
           
+          {
+          !openAccountMenu ? (null) :
+          <div 
+          style = {{
+          border: 'solid 10px transparent',
+          borderBottomColor: 'white',
+          position: 'absolute',
+          top: '42px',
+          right: '42px',
+          }}></div>
+          }
           <Menu
+            sx={{
+              marginTop: '46px',
+            }}
             id="menu-appbar"
             anchorEl={anchorE2}
             anchorOrigin={{
@@ -192,9 +188,9 @@ const SiteHeader = (props) => {
           >
           <AccountMenu context = {authContext}/>
           </Menu>
-          <LoginModal context={authContext} setIndex={setModalIndex} index={modalIndex}/>
-          <RegisterModal context={authContext} setIndex={setModalIndex} index={modalIndex}/>
-          <ResetModal context={authContext} setIndex={setModalIndex} index={modalIndex}/>
+          <LoginModal context={authContext} setIndex={authContext.setModalIndex} index={authContext.modalIndex}/>
+          <RegisterModal context={authContext} setIndex={authContext.setModalIndex} index={authContext.modalIndex}/>
+          <ResetModal context={authContext} setIndex={authContext.setModalIndex} index={authContext.modalIndex}/>
           
         </Toolbar>
       </AppBar>

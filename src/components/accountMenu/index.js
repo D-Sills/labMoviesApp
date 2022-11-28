@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
@@ -9,12 +10,11 @@ const AccountMenu = (props) => {
     const context = props.context;
     
     return (
-    <Paper sx={{ width: 220, maxWidth: '100%' }}>
+    <Paper sx={{ width: 220, maxWidth: '100%'}}>
         <MenuList>
+        <Typography>{context.name}</Typography>
         <MenuItem>
             <ListItemText>
-            {context.name}
-            <br/>
             View Profile
             </ListItemText>
         </MenuItem>

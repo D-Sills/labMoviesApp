@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useMemo} from "react";
 import {createRoot} from "react-dom/client";
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import HomePage from "./pages/homePage";
@@ -18,6 +18,7 @@ import TVShowPage from "./pages/tvDetailsPage";
 import PersonPage from "./pages/personDetailsPage";
 import AuthenticationContextProvider from "./contexts/authenticationContext";
 import { lightTheme, darkTheme } from "./styles/themes";
+import { useEffect } from "react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,19 +31,22 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  const [themeIndex, setThemeIndex] = useState(0);
   const [theme, setTheme] = useState(lightTheme);
+  
   useEffect(() => {
-    window.matchMedia('(prefers-color-scheme: dark)')
-      .addEventListener('change', event => {
-        const colorScheme = event.matches ? "dark" : "light";
-        colorScheme === "light" ? setTheme(lightTheme) : setTheme(darkTheme); 
-        console.log(colorScheme);
-        setTheme(colorScheme);
-      });
-  }, []);
+    if (window.localStorage.getItem('themeIndex') === null) {
+      return;
+    }
+    setThemeIndex(JSON.parse(window.localStorage.getItem('themeIndex')));
+    themeIndex === 0 ? setTheme(lightTheme) : setTheme(darkTheme);
+  }, [themeIndex]);
   
   const changeTheme = () => {
-    theme === lightTheme ? setTheme(darkTheme) : setTheme(lightTheme);
+    let i = themeIndex
+    i === 0 ? i=1 : i=0;
+    window.localStorage.setItem('themeIndex', JSON.stringify(i))
+    setThemeIndex(JSON.parse(window.localStorage.getItem('themeIndex')))
   };
   
   return (

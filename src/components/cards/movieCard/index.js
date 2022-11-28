@@ -10,13 +10,16 @@ import { format } from 'date-fns';
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserLists } from "../../../contexts/userListsContext";
+import { AuthenticationContext } from "../../../contexts/authenticationContext";
 import img from '../../../images/film-poster-placeholder.png';
 import ContextMenu from "../contextMenu";
 import Menu from "@mui/material/Menu";
 import IconButton from "@mui/material/IconButton";
+import MovieTwoToneIcon from '@mui/icons-material/MovieTwoTone';
 
 export default function MovieCard({ content }) {
-  const context = useContext(UserLists);
+  const userContext = useContext(UserLists)
+  const authContext = useContext(AuthenticationContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -51,7 +54,7 @@ export default function MovieCard({ content }) {
     {
       content.favourite ? (
         <IconButton
-        onClick={context.addToFavourites(content)}
+        onClick={userContext.addToFavourites(content)}
         >
         <Avatar sx={{ backgroundColor: 'red' }}>
           <FavoriteIcon />
@@ -98,10 +101,15 @@ export default function MovieCard({ content }) {
       onClose={() => setAnchorEl(null)}
     >
     <ContextMenu
-      context = {context}
+      userContext = {userContext}
+      authContext = {authContext}
       content = {content}
     />
     </Menu>
+    </div>
+    
+    <div style={{position: "absolute", bottom: 5, right: 10,}}>
+          <MovieTwoToneIcon />
     </div>
     
     <div style={{position: "absolute", bottom: -25, left: 10,}}>

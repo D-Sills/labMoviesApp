@@ -5,12 +5,14 @@ export const ContentFilterContext = React.createContext();
 const ContentFilteringContextProvider = (props) => {
   const [categoryFilter, setCategoryFilter] = useState("top_rated");
   const [nameFilter, setNameFilter] = useState("");
+  const [languageFilter, setLanguageFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const genreId = Number(genreFilter);
 
   function handleChange(type, value) {
     if (type === "name") setNameFilter(value);
     else if (type === "category") setCategoryFilter(value);
+    else if (type === "language") setLanguageFilter(value);
     else setGenreFilter(value);
   };
 
@@ -27,6 +29,7 @@ const ContentFilteringContextProvider = (props) => {
         nameFilter,
         genreFilter,
         genreId,
+        languageFilter,
         handleChange,
         changePage,
       }}

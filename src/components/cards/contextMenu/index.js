@@ -1,6 +1,7 @@
-import Cloud from '@mui/icons-material/Cloud';
-import ContentCopy from '@mui/icons-material/ContentCopy';
-import ContentCut from '@mui/icons-material/ContentCut';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import { Typography } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -10,7 +11,7 @@ import Paper from '@mui/material/Paper';
 import React from "react";
 
 const ContextMenu = (props) => {
-    const context = props.context;
+    const context = props.userContext;
     
     const handleAddToFavourites = (e) => {
         e.preventDefault();
@@ -18,30 +19,59 @@ const ContextMenu = (props) => {
     };
 
     return (
-    <Paper sx={{ width: 220, maxWidth: '100%' }}>
+    <Paper sx={{ width: 280, maxWidth: '100%' }}>
+        
+        {
+        props.authContext.user ? (
         <MenuList>
         <MenuItem onClick={handleAddToFavourites}>
             <ListItemIcon>
-            <ContentCut fontSize="small" />
+            <FavoriteIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText>Add to Favourites</ListItemText>
-        </MenuItem>
-        
-        <MenuItem>
-            <ListItemIcon>
-            <ContentCopy fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>Add to Playlist</ListItemText>
         </MenuItem>
         
         <Divider />
         <MenuItem>
             <ListItemIcon>
-            <Cloud fontSize="small" />
+            <FormatListBulletedIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText>Web Clipboard</ListItemText>
+            <ListItemText>Add to List</ListItemText>
         </MenuItem>
         </MenuList>
+        ) :
+        <MenuList>
+        <Typography sx ={{
+            paddingLeft: '10px',
+            }}>
+            <b>Want to add this item to a list?</b>
+        </Typography>
+        <MenuItem onClick={() => props.authContext.setModalIndex(1)}>
+            <ListItemText>Login</ListItemText>
+            <ListItemIcon sx ={{
+            paddingRight: '160px',
+            }}>
+            <ArrowForwardIosIcon fontSize="small" />
+            </ListItemIcon>
+        </MenuItem>
+        
+        <Divider />
+        <Typography sx ={{
+            paddingLeft: '10px',
+            }}>
+            <b>Not a member?</b>
+        </Typography>
+        <MenuItem  onClick={() => props.authContext.setModalIndex(2)}>
+            <ListItemText>Register</ListItemText>
+            <ListItemIcon sx ={{
+            paddingRight: '138px',
+            }}>
+            <ArrowForwardIosIcon fontSize="small" />
+            </ListItemIcon>
+        </MenuItem>
+        </MenuList>
+        }
+        
     </Paper>
     );
 };

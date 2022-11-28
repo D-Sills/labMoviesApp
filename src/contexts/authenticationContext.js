@@ -10,6 +10,7 @@ const AuthenticationContextProvider = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+    const [modalIndex, setModalIndex] = useState(0);
     
     const fetchUserName = async () => {
         try {
@@ -17,6 +18,7 @@ const AuthenticationContextProvider = (props) => {
             const doc = await getDocs(q);
             const data = doc.docs[0].data();
             setName(data.name);
+            return name;
         } catch (err) {
             console.error(err);
             alert("An error occured while fetching user data");
@@ -39,6 +41,8 @@ const AuthenticationContextProvider = (props) => {
         setPassword,
         name,
         setName,
+        modalIndex,
+        setModalIndex,
         fetchUserName,
         logOut
         }}
