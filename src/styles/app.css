@@ -1,6 +1,5 @@
   body {
     background-color: #3E4756;
-    color: white;
     padding: 20px;
   }
 
@@ -11,7 +10,7 @@
   
   *::-webkit-scrollbar {
     width: 0.3em;
-    height: 0.3em;              
+    height: 0.5em;              
   }
 
   *::-webkit-scrollbar-track {
@@ -25,10 +24,3 @@
     border-radius: 50px;       /* roundness of the scroll thumb */
     outline: 1px solid rgba(18, 18, 18, 0.176);
   }
-  
-  *.MuiCardContent-root {
-    display: flex;
-
-  }
-
-  

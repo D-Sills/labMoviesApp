@@ -1,15 +1,12 @@
 import { Box } from "@mui/material";
+import Grid from "@mui/material/grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
+import OutsideClickHandler from 'react-outside-click-handler';
 import { useQuery } from 'react-query';
 import { searchDB } from "../../api/tmdb-api";
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import { alpha, styled } from '@mui/material/styles';
-import Grid from "@mui/material/grid";
 import SearchResults from "../searchResults";
-import OutsideClickHandler from 'react-outside-click-handler';
 
 const HomePageHeader = (props) => {
     const [searchType, setSearchType] = useState("multi");
@@ -29,8 +26,7 @@ const HomePageHeader = (props) => {
         return <h1>{error.message}</h1>
     }  
     
-
-    let    searchResults = data.results;
+    let searchResults = data.results;
     
     return (
         <Box sx={{margin: -3.5, flexGrow: 1}}>

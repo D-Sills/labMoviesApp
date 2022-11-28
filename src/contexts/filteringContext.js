@@ -6,6 +6,7 @@ const ContentFilteringContextProvider = (props) => {
   const [categoryFilter, setCategoryFilter] = useState("top_rated");
   const [nameFilter, setNameFilter] = useState("");
   const [languageFilter, setLanguageFilter] = useState("");
+  const [personType, setPersonType] = useState("Acting");
   const [genreFilter, setGenreFilter] = useState("0");
   const genreId = Number(genreFilter);
 
@@ -13,6 +14,7 @@ const ContentFilteringContextProvider = (props) => {
     if (type === "name") setNameFilter(value);
     else if (type === "category") setCategoryFilter(value);
     else if (type === "language") setLanguageFilter(value);
+    else if (type === "personType") setPersonType(value);
     else setGenreFilter(value);
   };
 
@@ -29,6 +31,7 @@ const ContentFilteringContextProvider = (props) => {
         nameFilter,
         genreFilter,
         genreId,
+        personType,
         languageFilter,
         handleChange,
         changePage,

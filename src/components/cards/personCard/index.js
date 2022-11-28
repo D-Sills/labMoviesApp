@@ -4,9 +4,10 @@ import Avatar from '@mui/material/Avatar';
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
+import EditIcon from '@mui/icons-material/Edit';
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { format } from 'date-fns';
+import TheatersIcon from '@mui/icons-material/Theaters';
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserLists } from "../../../contexts/userListsContext";
@@ -28,9 +29,31 @@ export default function PersonCard({ content }) {
   };
 
   let menuOpen = false;
+  
+  const getKnownContentNames = () => {
+    let knownFor = [];
 
+    content.known_for.forEach(element => {
+      if (element.media_type === "movie")
+        knownFor.push(element.title);
+      else
+        knownFor.push(element.name);
+    });
+    let list = (knownFor[0] + ", " + knownFor[1] + ", " + knownFor[2]);
+    return list;
+  }
+  
+  const getDeptIcon = () => {
+    if (content.known_for_department === "Acting")
+      return <TheaterComedyTwoToneIcon />;
+    if (content.known_for_department === "Directing")
+      return <TheatersIcon />;
+    if (content.known_for_department === "Writing")
+      return <EditIcon />;
+  }
+  
   return (
-<Card sx={{ 
+    <Card sx={{ 
     mainWidth: 350, 
     maxWidth: 350, 
     minHeight: 450,
@@ -55,11 +78,8 @@ export default function PersonCard({ content }) {
     </div>
     
     <div style={{position: "absolute", bottom: 5, right: 10,}}>
-
-          <TheaterComedyTwoToneIcon />
-  
+      {getDeptIcon()}
     </div>
-    
     
     <div style={{position: "absolute", top: 10, right: 10,}}>
     {
@@ -130,7 +150,7 @@ export default function PersonCard({ content }) {
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h7" component="p">
-            {content.known_for_department}
+          {getKnownContentNames()}
           </Typography>
         </Grid>
       </Grid> 

@@ -13,7 +13,6 @@ const formControl =
   {
     margin: 1,
     minWidth: 220,
-    backgroundColor: "rgb(255, 255, 255)"
   };
 
   const ITEM_HEIGHT = 48;
@@ -27,7 +26,7 @@ const formControl =
     },
   };
 
-  export default function FilterMoviesCard(props) {
+  export default function FilterMovies(props) {
     const { data, error, isLoading, isError } = useQuery({
       queryKey: ["movie genres"],
       queryFn: () => getGenres("movie"),
@@ -70,8 +69,8 @@ const formControl =
     };
 
   return (
-    <Typography>
-      <FormControl sx={formControl}>
+    <Typography sx={{display: 'flex',alignItems: 'center',}}>
+      <FormControl size="small" sx={formControl}>
         <InputLabel id="category-label">Category</InputLabel>
         <Select
           labelId="category-label"
@@ -89,7 +88,7 @@ const formControl =
           })}
         </Select>
       </FormControl>
-      <FormControl sx={formControl}>
+      <FormControl size="small" sx={formControl}>
         <InputLabel id="genre-label">Genre</InputLabel>
         <Select
           labelId="genre-label"
@@ -109,11 +108,11 @@ const formControl =
         </Select>
       </FormControl>
       <TextField
+        size="small"
         sx={formControl}
         id="filled-search"
         label="Search field"
         type="search"
-        variant="filled"
         value={props.titleFilter}
         onChange={handleTextChange}
       />

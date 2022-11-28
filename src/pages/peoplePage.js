@@ -11,8 +11,8 @@ const TVPage = (props) => {
   const context = useContext(ContentFilterContext);
   const [page, setPage] = useState(1);
   const {  data, error, isLoading, isError, isFetching, isPreviousData, }  = useQuery({
-    queryKey: ["people", "popular", page],
-    queryFn: () => getPeople(page),
+    queryKey: ["people", "popular", context.personType, page],
+    queryFn: () => getPeople(page, context.personType),
     keepPreviousData : true
   });
 
@@ -27,11 +27,6 @@ const TVPage = (props) => {
   let people = data.results;
   let pages = data.total_pages;
   if (pages > 500) pages = 500; //api call breaks above page 500
-
-  // Redundant, but necessary to avoid app crashing.
-  const favourites = people.filter(m => m.favourite)
-  localStorage.setItem('favourites', JSON.stringify(favourites))
-  const addToFavourites = (personId) => true 
 
   const handlePageChange = (val) => { 
     if (page === val) return;
@@ -48,9 +43,6 @@ const TVPage = (props) => {
       setState={handlePageChange}
       context={context}
       contentType = "person"
-      action={(person) => {
-        return <AddToFavouritesIcon movie={person} />
-      }}
     />
   );
 };

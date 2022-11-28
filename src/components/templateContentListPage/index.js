@@ -28,18 +28,18 @@ function ContentListPageTemplate(props) {
     setState = {props.setState}
     contentType = {props.contentType}
     />
-    <Pagination
+    <Pagination 
     setState = {props.setState}
     totalPages = {props.totalPages}
     page = {props.page}
     />
     
-    <Box sx={{ flexGrow: 1 }} >
+    <Box sx={{ flexGrow: 1}} >
       <Grid container sx={{ 
       'paddingRight': '20px',
       'paddingLeft': '20px',
-      'paddingTop': '10px',
-      'paddingBottom': '10px',
+      'paddingTop': '15px',
+      'paddingBottom': '5px',
       }}
       align="center">
         <Grid item 

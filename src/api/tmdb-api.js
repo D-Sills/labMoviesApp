@@ -66,9 +66,9 @@
     });
   };
   
-  export const getPeople = (page) => {
+  export const getPeople = (page, type="Acting") => {
     return fetch(
-      `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&page=${page}`
+      `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&with_known_for_department=${type}&page=${page}`
     ).then((response) => {
       if (!response.ok) {
         throw new Error(response.json().message);
