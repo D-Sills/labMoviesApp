@@ -1,7 +1,5 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import MovieDetails from "../components/movieDetails";
-import PageTemplate from "../components/templateMoviePage";
 import { getPerson } from '../api/tmdb-api'
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner'
@@ -24,15 +22,7 @@ const PersonDetailsPage = (props) => {
 
   return (
     <>
-      {person ? (
-        <>
-          <PageTemplate movie={person}>
-            <MovieDetails movie={person} />
-          </PageTemplate>
-        </>
-      ) : (
         <p>Waiting for movie details</p>
-      )}
     </>
   );
 };

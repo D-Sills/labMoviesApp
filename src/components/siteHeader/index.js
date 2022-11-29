@@ -59,13 +59,15 @@ const SiteHeader = (props) => {
 
   return (
     <>
+    <div  color="neutral">
       <AppBar position="fixed" color="neutral">
-      <Toolbar >
-          <Typography variant="h4" sx={{ flexGrow: 1 }}>
+      <Toolbar color="neutral">
+          <Typography variant="h4" sx={{ flexGrow: 1 }}
+          style={{color: '#B2BAC2'}}>
           <IconButton
                   onClick={() => handleMenuSelect("Home")}
                   color="inherit"
-                ><MovieIcon  /> MovieTMDB Client </IconButton>
+                ><MovieIcon color ="title" /> MovieTMDB Client </IconButton>
           </Typography>
 
             {isMobile ? (
@@ -125,13 +127,11 @@ const SiteHeader = (props) => {
           {
           props.theme === props.lightMode ? (<IconButton
             onClick={props.changeTheme}
-            color="white"
-          ><DarkModeIcon  /></IconButton>) 
+          ><DarkModeIcon  color="basicText"/></IconButton>) 
           : 
           <IconButton
             onClick={props.changeTheme}
-            color="white"
-          ><LightModeIcon  /></IconButton>
+          ><LightModeIcon  color="basicText"/></IconButton>
           }
           </Tooltip>
           {
@@ -195,6 +195,7 @@ const SiteHeader = (props) => {
         </Toolbar>
       </AppBar>
       <Offset/>
+      </div>
     </>
   );
 };

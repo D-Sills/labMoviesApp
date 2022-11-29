@@ -100,7 +100,7 @@ function LoginModal(props) {
         <Button sx = {{width: '100%',}}
             onClick={signInWithGoogle}
         >
-            <GoogleIcon />Login with Google
+            <GoogleIcon /> Login with Google
         </Button>
         </DialogContent>
         

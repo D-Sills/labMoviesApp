@@ -15,31 +15,47 @@ const ContextMenu = (props) => {
     
     const handleAddToFavourites = (e) => {
         e.preventDefault();
-        context.addToFavourites(props.content);
+        if (context.checkIfFav(props.content)) {
+            context.removeFromFavourites(props.content)
+        } else {
+            context.addToFavourites(props.content);
+        }
     };
+    
 
     return (
     <Paper sx={{ width: 280, maxWidth: '100%' }}>
-        
         {
         props.authContext.user ? (
-        <MenuList>
-        <MenuItem onClick={handleAddToFavourites}>
-            <ListItemIcon>
-            <FavoriteIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>Add to Favourites</ListItemText>
-        </MenuItem>
+            <MenuList>
+            {
+                context.checkIfFav(props.content) ? (
+                
+                <MenuItem onClick={handleAddToFavourites}>
+                    <ListItemIcon>
+                    <FavoriteIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText>Remove from Favourites</ListItemText>
+                </MenuItem>
+                ) :
         
-        <Divider />
-        <MenuItem>
-            <ListItemIcon>
-            <FormatListBulletedIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>Add to List</ListItemText>
-        </MenuItem>
-        </MenuList>
-        ) :
+                <MenuItem onClick={handleAddToFavourites}>
+                    <ListItemIcon>
+                    <FavoriteIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText>Add to Favourites</ListItemText>
+                </MenuItem>
+            }
+            <Divider />
+            
+            <MenuItem>
+                <ListItemIcon>
+                <FormatListBulletedIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>Add to List</ListItemText>
+            </MenuItem>
+            </MenuList>
+        ) : 
         <MenuList>
         <Typography sx ={{
             paddingLeft: '10px',
@@ -70,8 +86,7 @@ const ContextMenu = (props) => {
             </ListItemIcon>
         </MenuItem>
         </MenuList>
-        }
-        
+    }
     </Paper>
     );
 };

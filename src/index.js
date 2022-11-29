@@ -19,6 +19,7 @@ import PersonPage from "./pages/personDetailsPage";
 import AuthenticationContextProvider from "./contexts/authenticationContext";
 import { lightTheme, darkTheme } from "./styles/themes";
 import { useEffect } from "react";
+import { CssBaseline} from "@mui/material";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -50,17 +51,19 @@ const App = () => {
   };
   
   return (
+    <ThemeProvider theme={theme}>
+    <CssBaseline />
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <AuthenticationContextProvider>
           <UserListProvider>
           <ContentFilteringContextProvider>
-          <ThemeProvider theme={theme}>
+          
           <SiteHeader theme = {theme} changeTheme={changeTheme} lightMode = {lightTheme}/>    
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/movies/" element={<MoviesPage />} />
-                <Route path="/movies/:id" element={<MoviePage />} />
+                <Route exact path="/movies/:id" element={<MoviePage />} />
                 <Route path="/reviews/form" element={<AddMovieReviewPage/>} />
                 <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
               <Route path="/tv/" element={<TVPage />} />
@@ -69,14 +72,13 @@ const App = () => {
                 <Route path="/people/:id" element={<PersonPage />} />
               <Route path="*" element={ <Navigate to="/" /> } />
             </Routes>
-          </ThemeProvider>
           </ContentFilteringContextProvider>
           </UserListProvider>
           </AuthenticationContextProvider>
         </BrowserRouter>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
-    
+      </ThemeProvider>
   );
 };
 

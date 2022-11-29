@@ -32,12 +32,13 @@ const HomePageHeader = (props) => {
         <Box sx={{margin: -3.5, flexGrow: 1}}>
         <Grid container spacing={2} sx={{
             position: 'absolute',
-            top: '100px',}}>
+            top: '100px',
+            zIndex: 4,}}>
         <Grid item xs={12} sx={{margin: '40px',}}>
-        <Typography variant="h3">
+        <Typography variant="h3" style={{color: 'white',textShadow: '1px 1px #032541'}} >
             Welcome.
         </Typography>
-        <Typography variant="h4">
+        <Typography variant="h4" style={{color: 'white',textShadow: '1px 1px #032541'}}>
         Millions of movies, TV shows and people to discover. Explore now.
         </Typography>
         </Grid>
@@ -85,6 +86,7 @@ const HomePageHeader = (props) => {
             minWidth: '100%',
             maxWidth: '100%', 
             zIndex: -1,}}
+        style={{filter: 'blur(3px)'}}
         alt="Movie Banner."
         src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"/>
         

@@ -91,6 +91,7 @@ const formControl =
       <FormControl size="small" sx={formControl}>
         <InputLabel id="genre-label">Genre</InputLabel>
         <Select
+          color = "basicText"
           labelId="genre-label"
           id="genre-select"
           defaultValue=""

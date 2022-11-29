@@ -21,14 +21,15 @@ function ContentListPageTemplate(props) {
   }
 
   return (
-    <div>
+    <Box sx={{maxWidth: '1360px' ,marginLeft: 'auto',
+    marginRight: 'auto'}}> 
     <Header 
     title={props.title}
     context = {props.context}
     setState = {props.setState}
     contentType = {props.contentType}
     />
-    <Pagination 
+    <Pagination
     setState = {props.setState}
     totalPages = {props.totalPages}
     page = {props.page}
@@ -60,7 +61,7 @@ function ContentListPageTemplate(props) {
     totalPages = {props.totalPages}
     page = {props.page}
     />
-    </div>
+    </Box>
   );
 }
 export default ContentListPageTemplate;

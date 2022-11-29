@@ -11,7 +11,7 @@ const HomePageContent = ({content}) => {
         </ImageListItem>
     ));
     return (
-        <ScrollContainer className="scroll-container" vertical={false} horizontal={true}>
+        <ScrollContainer vertical={false} horizontal={true}>
         <ImageList sx={{gridAutoFlow: "column",
         gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr)) !important",
         gridAutoColumns: "minmax(300px, 1fr)"}}>

@@ -1,5 +1,4 @@
   body {
-    background-color: #3E4756;
     padding: 20px;
   }
 
@@ -9,18 +8,33 @@
   }
   
   *::-webkit-scrollbar {
-    width: 0.3em;
+    width: 0.4em;
     height: 0.5em;              
   }
 
   *::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.00);
     box-shadow: inset 0 0 6px rgba(0,0,0,0.00);
-    background-color: rgba(20, 20, 20, 0.655); 
+    background-color: rgba(104, 104, 104, 0.189); 
+    border-radius: 20px;  
   }
 
   *::-webkit-scrollbar-thumb {
     background-color: #032541;    /* color of the scroll thumb */
-    border-radius: 50px;       /* roundness of the scroll thumb */
+    border-radius: 100px;       /* roundness of the scroll thumb */
     outline: 1px solid rgba(18, 18, 18, 0.176);
+  }
+  
+  .bg-image {
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    filter: blur(8px);
+  }
+  
+  .wrapper {
+    position: flex;
+    background: linear-gradient(to left, #F5FAFF, transparent 20%);
+    z-index: 1;
   }

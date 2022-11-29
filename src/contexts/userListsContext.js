@@ -9,26 +9,29 @@ const UserListProvider = (props) => {
 
   const addToFavourites = (content) => {
     let newFavourites = [...favourites];
-    if (!favourites.includes(content.id)) {
-      newFavourites.push(content.id);
-      content.favourite = true;
-    } else {
-      removeFromFavourites(content)
+    if (favourites.includes(content.id)) {
       return;
-    }
-    
+    } 
+    newFavourites.push(content.id);
     setFavourites(newFavourites);
     console.log(favourites);
   };
 
   // We will use this function in a later section
   const removeFromFavourites = (content) => {
-    content.favourite = false;
+
     setFavourites( favourites.filter(
       (mId) => mId !== content.id
     ) )
     console.log(favourites);
   };
+  
+    // We will use this function in a later section
+    const checkIfFav = (content) => {
+      if (favourites.includes(content.id)) {
+        return true;
+      } else return false;
+    };
   
   const addReview = (movie, review) => {
     setMyReviews( {...myReviews, [movie.id]: review } )
@@ -53,6 +56,7 @@ const UserListProvider = (props) => {
         addReview,
         mustWatch,
         addToMustWatch,
+        checkIfFav,
       }}
     >
       {props.children}

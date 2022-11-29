@@ -1,39 +1,42 @@
-import React from "react";
-import { useParams } from 'react-router-dom';
-import MovieDetails from "../components/movieDetails";
-import PageTemplate from "../components/templateMoviePage";
-import { getTVShow } from '../api/tmdb-api'
+import Box from "@mui/material/Box";
+import React, { useContext } from "react";
 import { useQuery } from "react-query";
-import Spinner from '../components/spinner'
+import { useParams } from 'react-router-dom';
+import { getTVShow } from '../api/tmdb-api';
+import ContentDetails from "../components/contentDetails";
+import ContentHeader from "../components/contentHeader";
+import Spinner from '../components/spinner';
+import { AuthenticationContext } from "../contexts/authenticationContext";
+import { UserLists } from "../contexts/userListsContext";
 
 const TVDetailsPage = (props) => {
   const { id } = useParams();
+  const userContext = useContext(UserLists)
+  const authContext = useContext(AuthenticationContext);
 
   const { data: tvShow, error, isLoading, isError } = useQuery(
     ["tvShow", { id: id }],
     getTVShow
   );
-
+  
   if (isLoading) {
-    return <Spinner />;
+    return <Spinner />
   }
 
   if (isError) {
     return <h1>{error.message}</h1>;
   }
 
+  let contentType= 'tv';
+
   return (
-    <>
-      {tvShow ? (
-        <>
-          <PageTemplate movie={tvShow}>
-            <MovieDetails movie={tvShow} />
-          </PageTemplate>
-        </>
-      ) : (
-        <p>Waiting for movie details</p>
-      )}
-    </>
+  <Box>
+    <ContentHeader authContext = {authContext} userContext ={userContext} contentType = {contentType} content={tvShow} />
+    <Box sx={{maxWidth: '1360px' ,marginLeft: 'auto',
+    marginRight: 'auto'}}> 
+      <ContentDetails authContext = {authContext} userContext ={userContext} contentType = {contentType} content={tvShow}/>
+    </Box>
+  </Box> 
   );
 };
 

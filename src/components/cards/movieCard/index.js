@@ -26,6 +26,15 @@ export default function MovieCard({ content }) {
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  
+  const handleFavourite = (e) => {
+    e.preventDefault()
+    if (userContext.checkIfFav(content)) {
+      userContext.removeFromFavourites(content)
+    } else {
+      userContext.addToFavourites(content);
+    }
+  };
 
   const date = Date.parse(content.release_date);
   let menuOpen = false;
@@ -52,9 +61,9 @@ export default function MovieCard({ content }) {
     <div style={{ position: "relative" }}>
     <div style={{position: "absolute", top: 10, left: 10,}}>
     {
-      content.favourite ? (
+      userContext.checkIfFav(content) ? (
         <IconButton
-        onClick={userContext.addToFavourites(content)}
+        onClick={handleFavourite}
         >
         <Avatar sx={{ backgroundColor: 'red' }}>
           <FavoriteIcon />

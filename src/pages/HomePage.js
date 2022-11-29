@@ -13,7 +13,7 @@ import Spinner from '../components/spinner';
 const ToggleButton = styled(MuiToggleButton) ({
     '&.Mui-selected, &.Mui-selected:hover': {
         color: '#ffff',
-        backgroundColor: '#00ff00',
+        backgroundColor: '#032541',
     },
 });
 
@@ -50,7 +50,8 @@ const HomePage = (props) => {
     <Box sx={{ 'paddingRight': '20px',
     'paddingLeft': '20px',
     'paddingTop': '60px',
-    'paddingBottom': '10px', }} >
+    'paddingBottom': '10px', maxWidth: '1360px' ,marginLeft: 'auto',
+    marginRight: 'auto'}} >
     
     <Stack direction="row" spacing={2}>
     <Typography variant="h4">
