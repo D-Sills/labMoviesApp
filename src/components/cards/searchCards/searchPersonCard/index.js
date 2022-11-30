@@ -16,7 +16,7 @@ export default function SearchPersonCard({ content }) {
   const userContext = useContext(UserLists)
   
   return (
-    <Link style={{textDecoration: "none",}} to={"/tv/"+ content.id}>
+    <Link style={{textDecoration: "none",}} to={"/people/"+ content.id}>
     <div style={{ position: "relative" }}>
     <Card sx={{ 
     minHeight: 120,

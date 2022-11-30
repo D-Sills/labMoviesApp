@@ -9,7 +9,7 @@ import Spinner from '../components/spinner';
 import { AuthenticationContext } from "../contexts/authenticationContext";
 import { UserLists } from "../contexts/userListsContext";
 
-const TVDetailsPage = (props) => {
+const TVDetailsPage = () => {
   const { id } = useParams();
   const userContext = useContext(UserLists)
   const authContext = useContext(AuthenticationContext);

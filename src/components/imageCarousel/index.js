@@ -22,15 +22,18 @@ function ImageCarousel(props) {
     if (isError) {
     return <h1>{error.message}</h1>;
     }
-    const images = data.posters 
+    
+    let images = []
+    type === 'person' ? images = data.profiles : images = data.posters
+    
 
     return (
         <Carousel sx={{boxShadow: '10', borderRadius: '20px',}}
             fullHeightHover={true} 
             navButtonsProps={{          // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
                 style: {
-                    backgroundColor: 'rgba(0,0,0,0.8)',
-                    borderRadius: '2px'
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    borderRadius: '50px'
                 }
             }} 
             indicators = {false}

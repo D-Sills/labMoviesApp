@@ -29,9 +29,11 @@ const HomePageHeader = (props) => {
     let searchResults = data.results;
     
     return (
-        <Box sx={{margin: -3.5, flexGrow: 1}}>
+        <Box style={{margin: '-20px', backgroundColor: 'rgba(0,0,0,0.5)', boxShadow: 2,}} sx={{flexGrow: 1, display: 'flex',
+        justifyContent: 'center'}}>
         <Grid container spacing={2} sx={{
             position: 'absolute',
+            maxWidth: '1360px',
             top: '100px',
             zIndex: 4,}}>
         <Grid item xs={12} sx={{margin: '40px',}}>
@@ -85,8 +87,10 @@ const HomePageHeader = (props) => {
             boxShadow: 2,
             minWidth: '100%',
             maxWidth: '100%', 
+            opacity: 0.5,
+            filter: 'brightness(20%)',
             zIndex: -1,}}
-        style={{filter: 'blur(3px)'}}
+        style={{filter: 'blur(0px)'}}
         alt="Movie Banner."
         src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"/>
         

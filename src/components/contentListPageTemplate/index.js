@@ -1,6 +1,6 @@
 import Grid from "@mui/material/Grid";
 import React from "react";
-import Header from "../headerContentList";
+import Header from "../contentListHeader";
 import ContentList from "../contentList";
 import Pagination from '../pagination';
 import Box from '@mui/material/Box';

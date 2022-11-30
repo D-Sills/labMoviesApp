@@ -1,4 +1,4 @@
-import React, { useEffect, useState }  from "react";
+import React, { useState }  from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,22 +8,44 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
+import { useQuery } from 'react-query';
 import { getReviews } from "../../api/tmdb-api.js";
 import { excerpt } from "../../util";
+import Button from "@mui/material/Button"
+import MovieReview from "./movieReview";
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function MovieReviews(props) {
   const type = props.type;
   const content = props.content;
-  const [reviews, setReviews] = useState([]);
-
-  useEffect(() => {
-    getReviews(type, content.id).then((reviews) => {
-      setReviews(reviews);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  const [openFullReview, setOpenFullReview] = useState();
+  const [review, setReview] = useState();
+  
+  const { data, error, isLoading, isError }  = useQuery({
+    queryKey: ["reviews", type, content.id],
+    queryFn: () => getReviews(type, content.id),
+    keepPreviousData : true
+  });
+  
+  if (isLoading) {
+      return
+  }
+  
+  if (isError) {
+      return <h1>{error.message}</h1>
+  }  
+  
+  let reviews = data.results;
+  
+  const OpenReview = (r) => {
+    setReview(r);
+    setOpenFullReview(true);
+  }
+  
+  const CloseReview = () => {
+    setOpenFullReview(false);
+  }
+  
   return (
   <Box>
     {
@@ -35,24 +57,17 @@ export default function MovieReviews(props) {
     
     <TableContainer component={Paper}>
       <Table sx={{minWidth: 550}} aria-label="reviews table">
-        <TableHead>
-          <TableRow>
-            <TableCell >Author</TableCell>
-            <TableCell align="center">Excerpt</TableCell>
-            <TableCell align="right">More</TableCell>
-          </TableRow>
-        </TableHead>
         <TableBody>
           {reviews.map((r) => (
             <TableRow key={r.id}>
               <TableCell component="th" scope="row">
-                {r.author}
+                <b>{r.author}</b>
               </TableCell>
               <TableCell >{excerpt(r.content)}</TableCell>
               <TableCell >
-      
+                  <Button size = "small" onClick={() => OpenReview(r)} startIcon={<SearchIcon />} variant="outlined">
                   Full Review
-  
+                  </Button>
               </TableCell>
             </TableRow>
           ))}
@@ -60,6 +75,8 @@ export default function MovieReviews(props) {
       </Table>
     </TableContainer>
     }
+    
+    <MovieReview open={openFullReview} close={CloseReview} review={review}/>
   </Box>
   );
 }

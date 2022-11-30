@@ -29,12 +29,13 @@ const ContentHeader = (props) => {
     return list;
   }
   
-  const date= () => {
-    type === 'movie' ? (Date.parse(content.release_date)): Date.parse(content.first_air_data);
+  let date= () => {
+    type === 'movie' ? date = Date.parse(content.release_date) : date = Date.parse(content.first_air_date);
+    return date;
   }
   let rating = (content.vote_average).toString();
   rating = rating.replaceAll(".", "");
-  rating.slice(0,2)
+  rating = rating.slice(0,2)
   const getColorFromRating = () => {
     let color = 'FireBrick'
     if (rating >= 80) color = 'DarkSlateGray';
@@ -50,9 +51,11 @@ const ContentHeader = (props) => {
       let minute = String(time)[2] + String(time)[3]
       let goat = hour + 'h ' + minute + "m"
       return goat;
-    } 
-    let goat = content.episode_run_time + "m"
-    return goat;
+    }  else {
+      let goat = content.episode_run_time;
+      goat = goat.slice(0,2) + 'm';
+      return goat;
+    }
   }
   
   const getBackdrop = () => {
@@ -98,7 +101,7 @@ const ContentHeader = (props) => {
             </Typography>
             </Stack>
             <Typography sx={{paddingTop: '8px',paddingBottom: '24px'}} variant="body1" style={{color: 'white'}}>
-            {`${format(date, 'MMM d, yyyy')}`} • {getGenres()} • {getRuntime()}
+            {`${format(date(), 'MMM d, yyyy')}`} • {getGenres()} • {getRuntime()}
             </Typography>
             
             <Stack sx={{paddingBottom: '24px'}} direction="row" spacing={2}>

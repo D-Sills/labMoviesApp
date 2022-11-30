@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { getCast } from "../../api/tmdb-api";
-import ContentCast from "../contentCast";
+import ContentCast from "./contentCast";
 import MovieReviews from "../movieReviews";
 import Spinner from "../spinner";
 import MovieDetails from "./movieDetails";
@@ -41,8 +41,8 @@ const ContentDetails = (props) => {
     <Grid container spacing={2}>
     
     <Grid item xs={8} >
-    <Box className="wrapper">
-      <Typography sx={{paddingTop: '25px',paddingLeft: '10px'}} variant="h5">
+    <Box sx={{marginTop: '10px'}}>
+      <Typography sx={{paddingTop: '15px',paddingLeft: '10px'}} variant="h5">
         Top Billed Cast
       </Typography>
       <ContentCast content={cast}/>
@@ -54,8 +54,8 @@ const ContentDetails = (props) => {
     </Box>
     </Grid>
 
-    <Grid item xs={4}>
-    {type === 'movie' ? <MovieDetails content ={content} /> :  <TVDetails content ={content} />}
+    <Grid item xs={4} sx={{marginTop: '10px'}}>
+    {type === 'movie' ? <MovieDetails content ={content} /> : <TVDetails content ={content} />}
     </Grid>
 
       <Fab
@@ -68,7 +68,7 @@ const ContentDetails = (props) => {
           right: '1em'
         }}
       >
-        <NavigationIcon />
+      <NavigationIcon />
         Add Review
       </Fab>
       <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>

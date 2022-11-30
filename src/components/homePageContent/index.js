@@ -6,7 +6,7 @@ import ScrollContainer from 'react-indiana-drag-scroll'
 
 const HomePageContent = ({content}) => {
     let contentCards = content.map((m) => (
-        <ImageListItem>
+        <ImageListItem key={m.id}>
         <TrendingCard key={m.id} content={m} />
         </ImageListItem>
     ));

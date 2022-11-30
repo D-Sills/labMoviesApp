@@ -31,6 +31,7 @@ export default function TVCard({ content }) {
   let menuOpen = false;
   let rating = (content.vote_average).toString();
   rating = rating.replaceAll(".", "");
+  rating = rating.slice(0,2);
   const getColorFromRating = () => {
     let color = 'FireBrick'
     if (rating >= 80) color = 'DarkSlateGray';

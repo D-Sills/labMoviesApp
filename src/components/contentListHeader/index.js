@@ -1,9 +1,9 @@
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import React from "react";
-import FilterMovies from "../filterMovies";
-import FilterTV from "../filterTV";
-import FilterPeople from "../filterPeople";
+import FilterMovies from "./filterMovies";
+import FilterTV from "./filterTV";
+import FilterPeople from "./filterPeople";
 
 const Header = (props) => {
   const title = props.title

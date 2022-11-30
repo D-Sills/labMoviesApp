@@ -1,5 +1,4 @@
 import React from "react";
-import ReviewForm from "../components/reviewForm";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getMovie } from "../api/tmdb-api";
@@ -22,7 +21,7 @@ const WriteReviewPage = (props) => {
   }
   return (
 
-      <ReviewForm movie={movie} />
+      {/* <ReviewForm movie={movie} /> */}
   );
 };
 

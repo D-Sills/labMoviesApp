@@ -40,6 +40,7 @@ export default function MovieCard({ content }) {
   let menuOpen = false;
   let rating = (content.vote_average).toString();
   rating = rating.replaceAll(".", "");
+  rating = rating.slice(0,2);
   const getColorFromRating = () => {
     let color = 'FireBrick'
     if (rating >= 80) color = 'DarkSlateGray';
@@ -50,7 +51,7 @@ export default function MovieCard({ content }) {
   
   return (
     <Card sx={{ 
-    mainWidth: 350, 
+    minWidth: 250, 
     maxWidth: 350, 
     minHeight: 450,
     maxHeight: 450,

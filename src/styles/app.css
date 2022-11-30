@@ -34,7 +34,8 @@
   }
   
   .wrapper {
+    pointer-events: all;
     position: flex;
     background: linear-gradient(to left, #F5FAFF, transparent 20%);
-    z-index: 1;
+    z-index: 12;
   }

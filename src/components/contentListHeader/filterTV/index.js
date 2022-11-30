@@ -6,8 +6,8 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React from "react"; // useState/useEffect redundant 
 import { useQuery } from "react-query";
-import { getGenres } from "../../api/tmdb-api";
-import Spinner from '../spinner';
+import { getGenres } from "../../../api/tmdb-api";
+import Spinner from '../../spinner';
 
 const formControl = 
   {

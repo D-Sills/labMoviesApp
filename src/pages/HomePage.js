@@ -21,7 +21,7 @@ const HomePage = (props) => {
     const [type, setType] = useState("all");
     const [time, setTime] = useState("week");
     
-    const { data, error, isLoading, isError, isFetching, isPreviousData, }  = useQuery({
+    const { data, error, isLoading, isError}  = useQuery({
         queryKey: ["trending", type, time],
         queryFn: () => getTrending(type, time),
         keepPreviousData : true

@@ -1,16 +1,16 @@
 
-import React, { useState, useContext } from "react";
-import { getTVShows, getTVShow } from "../api/tmdb-api";
-import PageTemplate from '../components/templateContentListPage';
+import React, { useContext, useState } from "react";
 import { useQuery } from 'react-query';
-import Spinner from '../components/spinner';
+import { getTVShows } from "../api/tmdb-api";
 import AddToFavouritesIcon from '../components/cards/cardIcons/addToFavourites';
+import PageTemplate from '../components/contentListPageTemplate';
+import Spinner from '../components/spinner';
 import { ContentFilterContext } from "../contexts/filteringContext";
 
-const TVPage = (props) => {
+const TVPage = () => {
   const context = useContext(ContentFilterContext);
   const [page, setPage] = useState(1);
-  const {  data, error, isLoading, isError, isFetching, isPreviousData, }  = useQuery({
+  const {  data, error, isLoading, isError }  = useQuery({
     queryKey: ["tv", context.categoryFilter, page, context.genreId],
     queryFn: () => getTVShows(page, context.categoryFilter, context.genreId),
     keepPreviousData : true

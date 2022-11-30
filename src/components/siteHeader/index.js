@@ -186,8 +186,9 @@ const SiteHeader = (props) => {
             open={openAccountMenu}
             onClose={() => setAnchorE2(null)}
           >
-          <AccountMenu context = {authContext}/>
+          <AccountMenu anchor = {setAnchorE2} context = {authContext}/>
           </Menu>
+          
           <LoginModal context={authContext} setIndex={authContext.setModalIndex} index={authContext.modalIndex}/>
           <RegisterModal context={authContext} setIndex={authContext.setModalIndex} index={authContext.modalIndex}/>
           <ResetModal context={authContext} setIndex={authContext.setModalIndex} index={authContext.modalIndex}/>

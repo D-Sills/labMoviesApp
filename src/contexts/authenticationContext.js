@@ -12,13 +12,13 @@ const AuthenticationContextProvider = (props) => {
     const [name, setName] = useState("");
     const [modalIndex, setModalIndex] = useState(0);
     
-    const fetchUserName = async () => {
+    const fetchUserData = async () => {
+        if (!user) return;
         try {
             const q = query(collection(db, "users"), where("uid", "==", user?.uid));
             const doc = await getDocs(q);
             const data = doc.docs[0].data();
-            setName(data.name);
-            return name;
+            return data;
         } catch (err) {
             console.error(err);
             alert("An error occured while fetching user data");
@@ -28,7 +28,7 @@ const AuthenticationContextProvider = (props) => {
     const logOut = () => {
         logout();
     };
-    
+
     return (
     <AuthenticationContext.Provider
         value={{
@@ -43,7 +43,7 @@ const AuthenticationContextProvider = (props) => {
         setName,
         modalIndex,
         setModalIndex,
-        fetchUserName,
+        fetchUserData,
         logOut
         }}
     >

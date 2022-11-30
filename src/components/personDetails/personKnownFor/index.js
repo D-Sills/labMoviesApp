@@ -2,14 +2,15 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import React from "react";
 import ScrollContainer from 'react-indiana-drag-scroll';
-import CastCard from "../cards/castCard";
+import KnownForCard from "../../cards/knownForCard";
 
-const ContentCast = (props) => {
+const PersonKnownFor = (props) => {
     let content = props.content;
-    content.splice(7,100);
+    content.sort((a,b) => b.popularity - a.popularity);
+    content.splice(8,100);
     let contentCards = content.map((m) => (
-        <ImageListItem sx = {{position: 'flex', zIndex: -1,}}>
-        <CastCard  key={m.id} content={m} />
+        <ImageListItem key={m.id} sx = {{position: 'flex'}}>
+        <KnownForCard  key={m.id} content={m} />
         </ImageListItem>
     ));
     
@@ -24,4 +25,4 @@ const ContentCast = (props) => {
     );
 };
 
-export default ContentCast;
+export default PersonKnownFor;

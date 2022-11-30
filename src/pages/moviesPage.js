@@ -1,7 +1,7 @@
 
 import React, { useState, useContext } from "react";
 import { getMovies, getMovie } from "../api/tmdb-api";
-import PageTemplate from '../components/templateContentListPage';
+import PageTemplate from '../components/contentListPageTemplate';
 import { useQuery,useQueries } from 'react-query';
 import Spinner from '../components/spinner';
 import AddToFavouritesIcon from '../components/cards/cardIcons/addToFavourites';
