@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import {
-GoogleAuthProvider,
+  GoogleAuthProvider,
   getAuth,
   signInWithPopup,
   signInWithEmailAndPassword,
@@ -15,6 +15,8 @@ import {
   collection,
   where,
   addDoc,
+  doc, 
+  setDoc,
 }from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -32,6 +34,9 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+/*--------------------------------------------------------------------
+|  Authentication
+*-------------------------------------------------------------------*/
 const googleProvider = new GoogleAuthProvider();
 const signInWithGoogle = async () => {
   try {
@@ -40,11 +45,12 @@ const signInWithGoogle = async () => {
     const q = query(collection(db, "users"), where("uid", "==", user.uid));
     const docs = await getDocs(q);
     if (docs.docs.length === 0) {
-      await addDoc(collection(db, "users"), {
+      await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         name: user.displayName,
         authProvider: "google",
         email: user.email,
+        dateRegistered: new Date(),
       });
     }
   } catch (err) {
@@ -71,6 +77,17 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       name,
       authProvider: "local",
       email,
+      dateRegistered: new Date(),
+      favourites: {
+        favouriteMovies: {
+        },
+        favouriteTV: {
+        },
+        favouritePeople: {
+        },
+      },
+      watchLists: {
+      }
     });
   } catch (err) {
     console.error(err);
@@ -92,6 +109,13 @@ const logout = () => {
   signOut(auth);
 };
 
+/*--------------------------------------------------------------------
+|  Lists
+*-------------------------------------------------------------------*/
+
+
+
+//-------------------------------------------------------------------/
 export {
   auth,
   db,

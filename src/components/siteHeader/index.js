@@ -36,7 +36,7 @@ const SiteHeader = (props) => {
   const theme = useTheme(props.theme);
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
-
+  
   const menuOptions = [
     { label: "Home", path: "/" },
     { label: "Movies", path: "/movies/" },

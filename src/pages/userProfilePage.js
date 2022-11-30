@@ -19,27 +19,13 @@ const UserProfilePage = () => {
     if (!authContext.user) {navigate("/", { replace: true })};
   }, [authContext.user, navigate]);
 
-  const { data, error, isLoading, isError } = useQuery(
-    ["userData"],
-    authContext.fetchUserData
-  );
-  
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  if (isError) {
-    return <h1>{error.message}</h1>;
-  }
-  
   window.scrollTo(0, 0);
-  let userData = data;
 
   return (
     <Box>
-      <UserProfileHeader userData = {userData}/>
-      <Box sx={{marginTop: '30px', maxWidth: '1360px' ,marginLeft: 'auto', marginRight: 'auto'}}> 
-        <UserProfileDetails />
+      <UserProfileHeader authContext={authContext} />
+      <Box sx={{marginTop: '10px', maxWidth: '1360px' ,marginLeft: 'auto', marginRight: 'auto'}}> 
+        <UserProfileDetails userContext = {userLists}/>
       </Box>
     </Box>
   );

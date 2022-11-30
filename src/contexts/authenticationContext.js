@@ -1,29 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { UserLists } from "../contexts/userListsContext";
 import { auth, db, logout } from "./../firebase";
+import { onAuthStateChanged } from "firebase/auth";
 import { query, collection, getDocs, where } from "firebase/firestore";
 
 export const AuthenticationContext = React.createContext();
 
 const AuthenticationContextProvider = (props) => {
+    const userLists = useContext(UserLists);
     const [user, loading, error] = useAuthState(auth);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [modalIndex, setModalIndex] = useState(0);
+    const [data, setData] = useState([]);
     
-    const fetchUserData = async () => {
-        if (!user) return;
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            console.log("logged out");
+            return;
+        }
         try {
             const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-            const doc = await getDocs(q);
+            const doc = getDocs(q);
             const data = doc.docs[0].data();
+            setData(data);
             return data;
         } catch (err) {
             console.error(err);
             alert("An error occured while fetching user data");
         }
-    };
+        });
+        return () => unsubscribe();
+    }, [])
     
     const logOut = () => {
         logout();
@@ -43,11 +54,11 @@ const AuthenticationContextProvider = (props) => {
         setName,
         modalIndex,
         setModalIndex,
-        fetchUserData,
+        data,
         logOut
         }}
     >
-        {props.children}
+    {props.children}
     </AuthenticationContext.Provider>
     );
 };

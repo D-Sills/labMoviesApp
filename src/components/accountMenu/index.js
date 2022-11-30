@@ -24,7 +24,7 @@ const AccountMenu = (props) => {
     return (
     <Paper sx={{ width: 220, maxWidth: '100%'}}>
         <MenuList>
-        <Typography>{context.name}</Typography>
+        <Typography sx={{paddingLeft: '15px'}} variant = "h6"><b>{context.data.name}</b></Typography>
         <MenuItem>
             <ListItemText onClick = {() => handleMenuSelect()}>
             View Profile

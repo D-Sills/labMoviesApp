@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const UserProfileHeader = (props) => {
-  const data = props.userData;
+  const authContext = props.authContext;
   const navigate = useNavigate();
   
   return (
@@ -30,17 +30,17 @@ const UserProfileHeader = (props) => {
         <Avatar sx={{width: '160px', height: '160px',}}/>
         </Grid>  
         
-        <Grid item xs sx={{paddingTop: '50px'}}>
+        <Grid item xs sx={{marginTop: '50px'}}>
           <Stack direction="row" spacing={2}>
           <Typography variant="h4" style={{color: 'white'}} >
-          {data.name}
+          {authContext.data.name}
           </Typography>
           <Typography sx={{paddingTop: '14px'}}variant="body1" style={{color: 'GrayText'}} >
           Member since whenever
           </Typography>
           </Stack>
           <Typography sx={{paddingTop: '8px',paddingBottom: '24px'}} variant="body1" style={{color: 'white'}}>
-          Favourited 3 • Logged in via • Email is 
+          Favourited {authContext.data.favourites} things • Logged in via {authContext.data.authProvider}• Email is {authContext.data.email} 
           </Typography>
         </Grid>
         </Grid>

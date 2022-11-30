@@ -124,14 +124,14 @@ const ContentHeader = (props) => {
                   onClick={handleFavourite}
                   >
                   <Avatar sx={{ backgroundColor: 'red' }}>
-                    <FavoriteIcon color = 'red'/>
+                    <FavoriteIcon color = 'white'/>
                   </Avatar>
                   </IconButton>
                 ) : <IconButton
                 onClick={handleFavourite}
                 >
                 <Avatar sx={{ backgroundColor: 'red' }}>
-                  <FavoriteIcon color = 'white'/>
+                  <FavoriteIcon color = 'black'/>
                 </Avatar>
                 </IconButton>
               }
