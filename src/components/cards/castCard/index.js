@@ -29,10 +29,10 @@ export default function CastCard(props ) {
   
   const handleFavourite = (e) => {
     e.preventDefault()
-    if (userContext.checkIfFav(content, 'movie')) {
-      userContext.removeFromFavourites(content, 'movie')
+    if (userContext.checkIfFav(content, 'person')) {
+      userContext.removeFromFavourites(content, 'person')
     } else {
-      userContext.addToFavourites(content, 'movie');
+      userContext.addToFavourites(content, 'person');
     }
   };
   

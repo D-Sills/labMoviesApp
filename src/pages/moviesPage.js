@@ -25,7 +25,7 @@ const MoviesPage = (props) => {
   if (isError) {
     return <h1>{error.message}</h1>
   }  
-  window.scrollTo(0, 0);
+
   let movies = data.results;
   let pages = data.total_pages;
   if (pages > 500) pages = 500; //api call breaks above page 500

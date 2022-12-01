@@ -26,7 +26,7 @@ const ContentHeader = (props) => {
     if (genres.length === 1) { list = (genres[0]);}
     if (genres.length === 2) { list = (genres[0] + ", " + genres[1]);}
     if (genres.length === 3) { list = (genres[0] + ", " + genres[1] + ", " + genres[2]);}
-    return list;
+    return list; //better ways to do this but w/e
   }
   
   let date= () => {
@@ -68,10 +68,10 @@ const ContentHeader = (props) => {
   
   const handleFavourite = (e) => {
     e.preventDefault()
-    if (props.userContext.checkIfFav(content)) {
-      props.userContext.removeFromFavourites(content)
+    if (props.userContext.checkIfFav(content, type)) {
+      props.userContext.removeFromFavourites(content, type)
     } else {
-      props.userContext.addToFavourites(content);
+      props.userContext.addToFavourites(content, type);
     }
   };
   
@@ -119,19 +119,19 @@ const ContentHeader = (props) => {
               </Avatar>
               
               {
-                props.userContext.checkIfFav(content) ? (
+                props.userContext.checkIfFav(content, type) ? (
                   <IconButton
                   onClick={handleFavourite}
                   >
-                  <Avatar sx={{ backgroundColor: 'red' }}>
-                    <FavoriteIcon color = 'white'/>
+                  <Avatar sx={{ backgroundColor: '#081C22' }}>
+                    <FavoriteIcon style={{ color: 'red' }}/>
                   </Avatar>
                   </IconButton>
                 ) : <IconButton
                 onClick={handleFavourite}
                 >
-                <Avatar sx={{ backgroundColor: 'red' }}>
-                  <FavoriteIcon color = 'black'/>
+                  <Avatar sx={{ backgroundColor: '#081C22' }}>
+                    <FavoriteIcon style={{ color: 'white' }}/>
                 </Avatar>
                 </IconButton>
               }

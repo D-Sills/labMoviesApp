@@ -26,7 +26,7 @@ const MovieDetailsPage = (props) => {
   }
 
   let contentType= 'movie';
-
+  window.scrollTo(0, 0);
   return (
   <Box>
     <ContentHeader  userContext ={userContext} contentType = {contentType} content={movie} />

@@ -14,8 +14,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import React, { useState } from "react";
-import { useQuery } from "react-query";
-import { getGenres } from "../../../../api/tmdb-api";
+import DialogActions from '@mui/material/DialogActions';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -30,6 +29,13 @@ const MenuProps = {
 
 function EditDreamMovie(props) {
     const context = props.context;
+    const [dreamMovieName, setDreamMovieName] = useState('');
+    const [dreamMovieCompany, setDreamMovieCompany] = useState('');
+    const [dreamMovieImagePath, setDreamMovieImagePath] = useState('');
+    const [dreamMovieOverview, setDreamMovieOverview] = useState('');
+    const [dreamMovieReleaseDate, setDreamMovieReleaseDate] = useState(new Date());
+    const [dreamMovieGenres, setDreamMovieGenres] = useState(['0','0','0']);
+    const [dreamMovieCast, setDreamMovieCast] = useState([]);
     const genreData = props.genres;
 
     return (
@@ -39,7 +45,7 @@ function EditDreamMovie(props) {
         <Grid item xs={12}>
         <DialogTitle>
         <Typography variant="h4">
-        {props.values.name}
+        {context.dreamMovieName}
         </Typography>
         </DialogTitle>
         </Grid>
@@ -47,8 +53,8 @@ function EditDreamMovie(props) {
         <DialogContent>
         <Grid item xs={12}>
         <TextField sx = {{width: '100%',}}
-            value={props.values.name}
-            onChange={props.setValues('name')}
+            value={dreamMovieName}
+            onChange={(e) => setDreamMovieName(e.target.value)}
         />
         </Grid>
         
@@ -58,8 +64,8 @@ function EditDreamMovie(props) {
         <InputLabel id="genre-label1">Genre</InputLabel>
         <Select
             defaultValue=""
-            value={props.genreId[0]}
-            onChange={props.setValues('genres[0]')}
+            value={dreamMovieGenres[0]}
+            
             MenuProps={MenuProps}
             >
             {genreData.map((genre) => {
@@ -76,8 +82,8 @@ function EditDreamMovie(props) {
         <InputLabel id="genre-label2">Genre</InputLabel>
         <Select
             defaultValue=""
-            value={props.genreId[1]}
-            onChange={props.setValues('genres[1]')}
+            value={dreamMovieGenres[1]}
+            
             MenuProps={MenuProps}
             >
             {genreData.map((genre) => {
@@ -94,8 +100,7 @@ function EditDreamMovie(props) {
         <InputLabel id="genre-label3">Genre</InputLabel>
         <Select 
             defaultValue=""
-            value={props.genreId[2]}
-            onChange={props.setValues('genres[2]')}
+            value={dreamMovieGenres[2]}
             MenuProps={MenuProps}
             >
             {genreData.map((genre) => {
@@ -113,10 +118,10 @@ function EditDreamMovie(props) {
         <Grid item xs={12}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DesktopDatePicker disableMaskedInput={true}
-                value={props.values.releaseDate}
+                value={dreamMovieReleaseDate}
+                onChange={(e) => setDreamMovieReleaseDate(e.target.value)}
                 label="Release Date"
                 inputFormat="MMM d, yyyy"
-                onChange={props.setValues('releaseDate')}
                 renderInput={(params) => <TextField {...params} />}
             />
         </LocalizationProvider>
@@ -125,22 +130,20 @@ function EditDreamMovie(props) {
         
         <Grid item xs={12}>
         <TextField sx = {{width: '100%',}}
-            placeholder={props.values.company}
-            onChange={props.setValues('company')}
+            value={dreamMovieCompany}
+            onChange={(e) => setDreamMovieCompany(e.target.value)}
             label="Production Company"
             type='text'
-            value={props.values.company}
         />
         </Grid>
         
         <Grid item xs={12}>
         <TextField sx = {{width: '100%',}}
-            placeholder={props.values.overview}
             multiline
             maxRows={4}
-            onChange={props.setValues('overview')}
             label="Overview"
-            value={props.values.overview}
+            value={dreamMovieOverview}
+            onChange={(e) => setDreamMovieOverview(e.target.value)}
             type='text'
         />
         </Grid>
@@ -159,6 +162,16 @@ function EditDreamMovie(props) {
         </label>
         </Grid>
         </DialogContent>
+        
+        <DialogActions>
+            <Button onClick={() => props.setOpen(false)}>Cancel</Button>
+            <Button onClick={() => context.setDreamMovieValues(
+            dreamMovieName, dreamMovieReleaseDate, dreamMovieImagePath, dreamMovieOverview,
+            dreamMovieCompany, dreamMovieGenres, dreamMovieCast
+            )}>
+            Update Details
+            </Button>
+        </DialogActions>
         
     </Dialog>
     </Grid>

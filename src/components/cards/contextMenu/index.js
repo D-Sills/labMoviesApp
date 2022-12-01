@@ -17,12 +17,13 @@ const ContextMenu = (props) => {
     const handleAddToFavourites = (e) => {
         e.preventDefault();
         if (context.checkIfFav(props.content,type)) {
+            props.setAnchor(null);
             context.removeFromFavourites(props.content,type)
         } else {
+            props.setAnchor(null);
             context.addToFavourites(props.content,type);
         }
     };
-    
 
     return (
     <Paper sx={{ width: 280, maxWidth: '100%' }}>
@@ -30,7 +31,7 @@ const ContextMenu = (props) => {
         context.user ? (
             <MenuList>
             {
-                context.checkIfFav(props.content) ? (
+                context.checkIfFav(props.content,type) ? (
                 
                 <MenuItem onClick={handleAddToFavourites}>
                     <ListItemIcon>
@@ -53,7 +54,7 @@ const ContextMenu = (props) => {
                 <ListItemIcon>
                 <FormatListBulletedIcon fontSize="small" />
                 </ListItemIcon>
-                <ListItemText>Add to List</ListItemText>
+                <ListItemText>Add to List(Doesn't do anything)</ListItemText>
             </MenuItem>
             </MenuList>
         ) : 

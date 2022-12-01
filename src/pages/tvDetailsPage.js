@@ -26,7 +26,7 @@ const TVDetailsPage = () => {
   }
 
   let contentType= 'tv';
-
+  window.scrollTo(0, 0);
   return (
   <Box>
     <ContentHeader userContext ={userContext} contentType = {contentType} content={tvShow} />

@@ -47,6 +47,7 @@ const SiteHeader = (props) => {
   const handleMenuSelect = (pageURL) => {
     filterContext.changePage();
     navigate(pageURL, { replace: true });
+    window.scrollTo(0, 0);
   };
 
   const handleBurgerMenu = (event) => {

@@ -119,6 +119,7 @@ export default function TVCard({ content }) {
       userContext = {context}
       content = {content}
       type = 'tv'
+      setAnchor = {setAnchorEl}
     />
     </Menu>
     </div>

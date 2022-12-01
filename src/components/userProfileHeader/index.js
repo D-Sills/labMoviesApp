@@ -30,11 +30,11 @@ const UserProfileHeader = (props) => {
           {userContext.data.name}
           </Typography>
           <Typography sx={{paddingTop: '14px'}}variant="body1" style={{color: 'GrayText'}} >
-          Member since {userContext.data.dateRegistered}
+          Member since
           </Typography>
           </Stack>
           <Typography sx={{paddingTop: '8px',paddingBottom: '24px'}} variant="body1" style={{color: 'white'}}>
-          Favourited {userContext.favourites.length} things • Logged in via {userContext.data.authProvider}• Email is {userContext.data.email} 
+          Favourited things • Logged in via {userContext.data.authProvider}• Email is {userContext.data.email} 
           </Typography>
         </Grid>
         </Grid>

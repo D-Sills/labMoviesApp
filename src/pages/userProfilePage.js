@@ -14,8 +14,6 @@ const UserProfilePage = () => {
     if (!userContext.user) {navigate("/", { replace: true })};
   }, [userContext.user, navigate]);
 
-  window.scrollTo(0, 0);
-
   return (
     <Box>
       <UserProfileHeader userContext={userContext} />

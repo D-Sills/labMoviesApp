@@ -109,6 +109,7 @@ export default function MovieCard({ content }) {
       onClose={() => setAnchorEl(null)}
     >
     <ContextMenu
+      setAnchor = {setAnchorEl}
       userContext = {context}
       content = {content}
       type = 'movie'

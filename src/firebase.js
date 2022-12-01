@@ -78,16 +78,6 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       authProvider: "local",
       email,
       dateRegistered: new Date(),
-      favourites: {
-        favouriteMovies: {
-        },
-        favouriteTV: {
-        },
-        favouritePeople: {
-        },
-      },
-      watchLists: {
-      }
     });
   } catch (err) {
     console.error(err);
@@ -108,12 +98,6 @@ const sendPasswordReset = async (email) => {
 const logout = () => {
   signOut(auth);
 };
-
-/*--------------------------------------------------------------------
-|  Lists
-*-------------------------------------------------------------------*/
-
-
 
 //-------------------------------------------------------------------/
 export {

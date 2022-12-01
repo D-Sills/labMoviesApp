@@ -7,13 +7,10 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { UserLists } from "../../../../contexts/userListsContext";
 import img from '../../../../images/film-poster-placeholder.png';
 
-export default function SearchMovieCard({ content }) {
-  const userContext = useContext(UserLists)
+export default function SearchMovieCard({ content, userContext }) {
 
   let rating = (content.vote_average).toString();
   rating = rating.replaceAll(".", "");

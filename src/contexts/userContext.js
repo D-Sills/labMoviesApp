@@ -14,8 +14,14 @@ const UserContextProvider = (props) => {
     const [modalIndex, setModalIndex] = useState(0);
     const [data, setData] = useState([]);
     const [favourites, setFavourites] = useState( [] )
-    const [dreamMovie, setdreamMovie] = useState( [] )
-    
+    const [dreamMovieName, setDreamMovieName] = useState('');
+    const [dreamMovieCompany, setDreamMovieCompany] = useState('');
+    const [dreamMovieImagePath, setDreamMovieImagePath] = useState('');
+    const [dreamMovieOverview, setDreamMovieOverview] = useState('');
+    const [dreamMovieReleaseDate, setDreamMovieReleaseDate] = useState(new Date());
+    const [dreamMovieGenres, setDreamMovieGenres] = useState(['0','0','0']);
+    const [dreamMovieCast, setDreamMovieCast] = useState([]);
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (!user) {
@@ -42,9 +48,24 @@ const UserContextProvider = (props) => {
                 console.log(tmp) 
                 setFavourites(tmp);
                 
+                //dreamMovie
+                const setDreamMovieValues = async () => {
+                    const docRef2 = doc(db, "users", user.uid,);
+                    const colRef2 = collection(docRef2, "dreamMovies");
+                    const dream = await getDocs(colRef2);
+                    const dreamData = dream.docs[0].data();
+                    setDreamMovieName(dreamData.name);
+                    setDreamMovieReleaseDate(dreamData.releaseDate);
+                    setDreamMovieImagePath(dreamData.imagePath);
+                    setDreamMovieOverview(dreamData.overview);
+                    setDreamMovieCompany(dreamData.company);
+                    setDreamMovieGenres(dreamData.genres);
+                    setDreamMovieCast(dreamData.cast); //not efficient lol
+                    console.log(dreamData)
+                };
+                setDreamMovieValues();
             } catch (err) {
                 console.error(err);
-                alert("An error occured while fetching user data");
             }
         };
         fetchUserData();
@@ -74,12 +95,21 @@ const UserContextProvider = (props) => {
             name: nameOf,
             imagePath: path,
         });
-        const favs = await getDocs(colRef);
+        /* const favs = await getDocs(colRef);
         let tmp = [];
         favs.forEach((doc) => {
             tmp.push(doc.data()); // "doc1", "doc2" and "doc3"
         });
-        setFavourites(tmp);
+        setFavourites(tmp); */
+        const tmp = {
+            id: content.id,
+            mediaType: type,
+            name: nameOf,
+            imagePath: path,
+        };
+        let newFavourites = [...favourites];
+        newFavourites.push(tmp);
+        setFavourites(newFavourites);
     } catch (err) {
         console.error(err);
         alert(err.message);
@@ -95,12 +125,15 @@ const UserContextProvider = (props) => {
         const docDel = doc(colRef, docName);
         deleteDoc(docDel);
         
-        const favs = await getDocs(colRef);
+        /* const favs = await getDocs(colRef);
         let tmp = [];
         favs.forEach((doc) => {
             tmp.push(doc.data()); // "doc1", "doc2" and "doc3"
         });
-        setFavourites(tmp);
+        setFavourites(tmp); */
+        setFavourites( favourites.filter(
+            (obj) => (obj.id + "_" + type) !== docName
+        ))
     } catch (err) {
         console.error(err);
         alert(err.message);
@@ -118,10 +151,51 @@ const UserContextProvider = (props) => {
         }
     });
     if (i > 0) {
-        return true;
+        return true; //wouldn't work in the foreach for some reason
     } else return false;
     };
     
+    /*--------------------------------------------------------------------
+    |  Dream Movie
+    *-------------------------------------------------------------------*/
+    const saveDreamMovieValues = async () => {
+        try {
+            const docRef = doc(db, "users", user.uid,);
+            const colRef = collection(docRef, "dreamMovies");
+            await setDoc(doc(colRef,"DreamMoviePog"), {
+                name: dreamMovieName,
+                imagePath: dreamMovieImagePath,
+                company: dreamMovieCompany,
+                releaseDate: dreamMovieReleaseDate,
+                genres: dreamMovieGenres,
+                overview: dreamMovieOverview,
+                cast: dreamMovieCast
+            });
+        } catch (err) {
+            console.error(err);
+            return;
+        }
+    };
+    
+    const setDreamMovieValues = (name, releaseDate, imagePath,
+                                overview, company, genres, cast) => {
+        setDreamMovieName(name);
+        setDreamMovieReleaseDate(releaseDate);
+        setDreamMovieImagePath(imagePath);
+        setDreamMovieOverview(overview);
+        setDreamMovieCompany(company);
+        setDreamMovieGenres(genres);
+        setDreamMovieCast(cast);
+        saveDreamMovieValues();
+    };
+    
+    const addToCast = (actor) => {
+        let newCast = [...dreamMovieCast];
+        newCast.push(actor);
+        setDreamMovieCast(newCast);
+        console.log(dreamMovieCast);
+        saveDreamMovieValues();
+    };
     
     return (
     <UserContext.Provider
@@ -144,6 +218,15 @@ const UserContextProvider = (props) => {
         removeFromFavourites,
         setFavourites,
         checkIfFav,
+        addToCast,
+        dreamMovieName,
+        dreamMovieReleaseDate,
+        dreamMovieImagePath,
+        dreamMovieOverview,
+        dreamMovieCompany,
+        dreamMovieGenres,
+        dreamMovieCast,
+        setDreamMovieValues
         }}
     >
     {props.children}

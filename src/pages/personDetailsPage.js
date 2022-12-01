@@ -23,7 +23,9 @@ const PersonDetailsPage = () => {
   if (isError) {
     return <h1>{error.message}</h1>;
   }
-
+  
+  window.scrollTo(0, 0);
+  
   return (
     <Box sx={{maxWidth: '1360px' ,marginLeft: 'auto',
     marginRight: 'auto'}}> 

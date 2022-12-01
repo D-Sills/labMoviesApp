@@ -127,6 +127,7 @@ export default function PersonCard({ content }) {
     <ContextMenu
       userContext = {context}
       content = {content}
+      setAnchor = {setAnchorEl}
       type = 'person'
     />
     </Menu>
