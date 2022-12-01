@@ -9,8 +9,7 @@ import Typography from "@mui/material/Typography";
 import { format } from 'date-fns';
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { UserLists } from "../../../contexts/userListsContext";
-import { AuthenticationContext } from "../../../contexts/authenticationContext";
+import { UserContext } from "../../../contexts/userContext";
 import img from '../../../images/film-poster-placeholder.png';
 import ContextMenu from "../contextMenu";
 import Menu from "@mui/material/Menu";
@@ -18,8 +17,7 @@ import IconButton from "@mui/material/IconButton";
 import MovieTwoToneIcon from '@mui/icons-material/MovieTwoTone';
 
 export default function MovieCard({ content }) {
-  const userContext = useContext(UserLists)
-  const authContext = useContext(AuthenticationContext);
+  const context = useContext(UserContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -29,10 +27,10 @@ export default function MovieCard({ content }) {
   
   const handleFavourite = (e) => {
     e.preventDefault()
-    if (userContext.checkIfFav(content)) {
-      userContext.removeFromFavourites(content)
+    if (context.checkIfFav(content, 'movie')) {
+      context.removeFromFavourites(content, 'movie')
     } else {
-      userContext.addToFavourites(content);
+      context.addToFavourites(content, 'movie');
     }
   };
 
@@ -62,7 +60,7 @@ export default function MovieCard({ content }) {
     <div style={{ position: "relative" }}>
     <div style={{position: "absolute", top: 10, left: 10,}}>
     {
-      userContext.checkIfFav(content) ? (
+      context.checkIfFav(content,'movie') ? (
         <IconButton
         onClick={handleFavourite}
         >
@@ -111,9 +109,9 @@ export default function MovieCard({ content }) {
       onClose={() => setAnchorEl(null)}
     >
     <ContextMenu
-      userContext = {userContext}
-      authContext = {authContext}
+      userContext = {context}
       content = {content}
+      type = 'movie'
     />
     </Menu>
     </div>

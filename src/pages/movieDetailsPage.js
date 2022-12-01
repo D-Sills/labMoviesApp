@@ -6,13 +6,11 @@ import { getMovie } from '../api/tmdb-api';
 import ContentDetails from "../components/contentDetails";
 import ContentHeader from "../components/contentHeader";
 import Spinner from '../components/spinner';
-import { AuthenticationContext } from "../contexts/authenticationContext";
-import { UserLists } from "../contexts/userListsContext";
+import { UserContext } from "../contexts/userContext";
 
 const MovieDetailsPage = (props) => {
   const { id } = useParams();
-  const userContext = useContext(UserLists)
-  const authContext = useContext(AuthenticationContext);
+  const userContext = useContext(UserContext)
 
   const { data: movie, error, isLoading, isError } = useQuery(
     ["movie", { id: id }],
@@ -31,10 +29,10 @@ const MovieDetailsPage = (props) => {
 
   return (
   <Box>
-    <ContentHeader authContext = {authContext} userContext ={userContext} contentType = {contentType} content={movie} />
+    <ContentHeader  userContext ={userContext} contentType = {contentType} content={movie} />
     <Box sx={{maxWidth: '1360px' ,marginLeft: 'auto',
     marginRight: 'auto'}}> 
-      <ContentDetails authContext = {authContext} userContext ={userContext} contentType = {contentType} content={movie}/>
+      <ContentDetails userContext ={userContext} contentType = {contentType} content={movie}/>
     </Box>
   </Box> 
   );

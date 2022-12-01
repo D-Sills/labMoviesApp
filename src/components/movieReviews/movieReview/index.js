@@ -1,9 +1,9 @@
-import React from "react";
-import Box from "@mui/material/Box"
-import Dialog from '@mui/material/Dialog';
+import { Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import { autocompleteClasses, Typography } from '@mui/material';
+import Box from "@mui/material/Box";
+import Dialog from '@mui/material/Dialog';
 import Grid from "@mui/material/grid";
+import React from "react";
 
 const MovieReview =  (props) => {
   if (props.review === undefined) return;

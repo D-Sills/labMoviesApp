@@ -1,31 +1,26 @@
 
-import React, { useContext, useState, useEffect } from "react";
-import { UserLists } from "../contexts/userListsContext";
-import { AuthenticationContext } from "../contexts/authenticationContext";
+import Box from '@mui/material/Box';
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from 'react-query';
-import Spinner from '../components/spinner'
-import UserProfileHeader from '../components/userProfileHeader';
 import UserProfileDetails from '../components/userProfileDetails';
-import Box from '@mui/material/Box'
+import UserProfileHeader from '../components/userProfileHeader';
+import { UserContext } from "../contexts/userContext";
 
 const UserProfilePage = () => {
-  const userLists = useContext(UserLists);
-  const authContext = useContext(AuthenticationContext);
-  const [page, setPage] = useState(1);
+  const userContext = useContext(UserContext);
   const navigate = useNavigate();
   
   useEffect(() => {
-    if (!authContext.user) {navigate("/", { replace: true })};
-  }, [authContext.user, navigate]);
+    if (!userContext.user) {navigate("/", { replace: true })};
+  }, [userContext.user, navigate]);
 
   window.scrollTo(0, 0);
 
   return (
     <Box>
-      <UserProfileHeader authContext={authContext} />
+      <UserProfileHeader userContext={userContext} />
       <Box sx={{marginTop: '10px', maxWidth: '1360px' ,marginLeft: 'auto', marginRight: 'auto'}}> 
-        <UserProfileDetails userContext = {userLists}/>
+        <UserProfileDetails userContext = {userContext}/>
       </Box>
     </Box>
   );

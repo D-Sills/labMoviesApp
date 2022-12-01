@@ -1,23 +1,16 @@
-import NavigationIcon from "@mui/icons-material/Navigation";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from "@mui/material/Box";
-import Divider from '@mui/material/Divider';
-import Drawer from "@mui/material/Drawer";
-import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/grid";
 import Typography from "@mui/material/Typography";
-import React, { useState } from "react";
-import { useQuery } from "react-query";
-import Spinner from "../spinner";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import FavouritedContent from "./favouritedContent";
+import React from "react";
 import DreamMovieContainer from './dreamMovieContainer';
+import FavouritedContent from "./favouritedContent";
 
 const UserProfileDetails = (props) => { 
   const context = props.userContext;
-  const [openDream, setOpenDream] = useState(false);
   
   return (
     <Box sx={{flexGrow: 1, }}>

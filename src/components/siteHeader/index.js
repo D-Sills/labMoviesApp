@@ -13,7 +13,7 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MovieIcon from '@mui/icons-material/Movie';
 import { ContentFilterContext } from "../../contexts/filteringContext";
-import { AuthenticationContext } from "../../contexts/authenticationContext";
+import { UserContext } from "../../contexts/userContext";
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import Box from '@mui/material/Box';
@@ -28,7 +28,7 @@ const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader = (props) => {
   const filterContext = useContext(ContentFilterContext);
-  const authContext = useContext(AuthenticationContext);
+  const userContext = useContext(UserContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const openBurgerMenu = Boolean(anchorEl);
   const [anchorE2, setAnchorE2] = useState(null);
@@ -135,7 +135,7 @@ const SiteHeader = (props) => {
           }
           </Tooltip>
           {
-          authContext.user ? (
+          userContext.user ? (
           <IconButton
           aria-label="menu"
           aria-controls="menu-appbar"
@@ -151,7 +151,7 @@ const SiteHeader = (props) => {
           <Button
             key="Login"
             color="inherit" 
-            onClick={() => authContext.setModalIndex(1)}
+            onClick={() => userContext.setModalIndex(1)}
           >Login
           </Button>
           }
@@ -186,12 +186,12 @@ const SiteHeader = (props) => {
             open={openAccountMenu}
             onClose={() => setAnchorE2(null)}
           >
-          <AccountMenu anchor = {setAnchorE2} context = {authContext}/>
+          <AccountMenu anchor = {setAnchorE2} context = {userContext}/>
           </Menu>
           
-          <LoginModal context={authContext} setIndex={authContext.setModalIndex} index={authContext.modalIndex}/>
-          <RegisterModal context={authContext} setIndex={authContext.setModalIndex} index={authContext.modalIndex}/>
-          <ResetModal context={authContext} setIndex={authContext.setModalIndex} index={authContext.modalIndex}/>
+          <LoginModal context={userContext} setIndex={userContext.setModalIndex} index={userContext.modalIndex}/>
+          <RegisterModal context={userContext} setIndex={userContext.setModalIndex} index={userContext.modalIndex}/>
+          <ResetModal context={userContext} setIndex={userContext.setModalIndex} index={userContext.modalIndex}/>
           
         </Toolbar>
       </AppBar>

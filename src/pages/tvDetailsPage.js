@@ -6,13 +6,11 @@ import { getTVShow } from '../api/tmdb-api';
 import ContentDetails from "../components/contentDetails";
 import ContentHeader from "../components/contentHeader";
 import Spinner from '../components/spinner';
-import { AuthenticationContext } from "../contexts/authenticationContext";
-import { UserLists } from "../contexts/userListsContext";
+import { UserContext } from "../contexts/userContext";
 
 const TVDetailsPage = () => {
   const { id } = useParams();
-  const userContext = useContext(UserLists)
-  const authContext = useContext(AuthenticationContext);
+  const userContext = useContext(UserContext)
 
   const { data: tvShow, error, isLoading, isError } = useQuery(
     ["tvShow", { id: id }],
@@ -31,10 +29,10 @@ const TVDetailsPage = () => {
 
   return (
   <Box>
-    <ContentHeader authContext = {authContext} userContext ={userContext} contentType = {contentType} content={tvShow} />
+    <ContentHeader userContext ={userContext} contentType = {contentType} content={tvShow} />
     <Box sx={{maxWidth: '1360px' ,marginLeft: 'auto',
     marginRight: 'auto'}}> 
-      <ContentDetails authContext = {authContext} userContext ={userContext} contentType = {contentType} content={tvShow}/>
+      <ContentDetails userContext ={userContext} contentType = {contentType} content={tvShow}/>
     </Box>
   </Box> 
   );

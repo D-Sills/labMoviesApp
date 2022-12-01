@@ -12,13 +12,14 @@ import React from "react";
 
 const ContextMenu = (props) => {
     const context = props.userContext;
+    const type = props.type;
     
     const handleAddToFavourites = (e) => {
         e.preventDefault();
-        if (context.checkIfFav(props.content)) {
-            context.removeFromFavourites(props.content)
+        if (context.checkIfFav(props.content,type)) {
+            context.removeFromFavourites(props.content,type)
         } else {
-            context.addToFavourites(props.content);
+            context.addToFavourites(props.content,type);
         }
     };
     
@@ -26,7 +27,7 @@ const ContextMenu = (props) => {
     return (
     <Paper sx={{ width: 280, maxWidth: '100%' }}>
         {
-        props.authContext.user ? (
+        context.user ? (
             <MenuList>
             {
                 context.checkIfFav(props.content) ? (
@@ -62,7 +63,7 @@ const ContextMenu = (props) => {
             }}>
             <b>Want to add this item to a list?</b>
         </Typography>
-        <MenuItem onClick={() => props.authContext.setModalIndex(1)}>
+        <MenuItem onClick={() => context.setModalIndex(1)}>
             <ListItemText>Login</ListItemText>
             <ListItemIcon sx ={{
             paddingRight: '160px',
@@ -77,7 +78,7 @@ const ContextMenu = (props) => {
             }}>
             <b>Not a member?</b>
         </Typography>
-        <MenuItem  onClick={() => props.authContext.setModalIndex(2)}>
+        <MenuItem  onClick={() => context.setModalIndex(2)}>
             <ListItemText>Register</ListItemText>
             <ListItemIcon sx ={{
             paddingRight: '138px',

@@ -4,7 +4,7 @@ import TVCard from "../cards/tvCard";
 import PersonCard from "../cards/personCard";
 import Grid from "@mui/material/Grid";
 
-const ContentList = ( {content, action, contentType }) => {
+const ContentList = ( {content, contentType }) => {
   if (contentType === 'tv') {
     let contentCards = content.map((m) => (
       <Grid key={m.id} item xs={12} sm={6} md={4} lg={3}>

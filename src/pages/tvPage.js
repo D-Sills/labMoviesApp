@@ -28,11 +28,6 @@ const TVPage = () => {
   let pages = data.total_pages;
   if (pages > 500) pages = 500; //api call breaks above page 500
 
-  // Redundant, but necessary to avoid app crashing.
-  const favourites = tvShows.filter(m => m.favourite)
-  localStorage.setItem('favourites', JSON.stringify(favourites))
-  const addToFavourites = (movieId) => true 
-
   const handlePageChange = (val) => { 
     if (page === val) return;
     else

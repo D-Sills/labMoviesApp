@@ -7,6 +7,8 @@ import Paper from '@mui/material/Paper';
 import { format } from 'date-fns';
 import React, { useState } from "react";
 import EditDreamMovie from './editDreamMovie';
+import { useQuery } from "react-query";
+import {GetGenres} from "../../../api/tmdb-api"
 
 function DreamMovieContainer(props) {
     const context = props.userContext;
@@ -16,11 +18,34 @@ function DreamMovieContainer(props) {
         imagePath: '.\images\film-poster-placeholder.png',
         company: 'Production Company',
         releaseDate: new Date(),
-        genres: [],
+        genres: ['0', '0', '0'],
         overview: 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source',
         cast: []
     });
-
+    const genreId = [Number(values.genres[0]),Number(values.genres[1]),Number(values.genres[2])];
+    
+    const { data, error, isLoading, isError } = useQuery({
+        queryKey: ["movie genres"],
+        queryFn: () => GetGenres("movie"),
+    });
+    
+    if (isLoading) {
+        return;
+    }
+    
+    if (isError) {
+        return <h1>{error.message}</h1>;
+    }
+    
+    const genres = data.genres;
+    if (genres[0].name !== "All"){
+        genres.unshift({ id: "0", name: "All" });
+    }
+    
+    const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
+    };
+    
     const getGenres = () => {
         let genres = [];
     
@@ -87,8 +112,8 @@ function DreamMovieContainer(props) {
             </Grid>
         </Grid>
         <EditDreamMovie 
-        context={context}
-        values={values} setValues={setValues}
+        context={context} genreId={genreId} genres={genres}
+        values={values} setValues={handleChange}
         open ={openMore} setOpen={setOpenMore}         
         />
     </Paper>

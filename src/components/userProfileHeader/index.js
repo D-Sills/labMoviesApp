@@ -1,18 +1,12 @@
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/grid";
-import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { format } from 'date-fns';
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const UserProfileHeader = (props) => {
-  const authContext = props.authContext;
-  const navigate = useNavigate();
+  const userContext = props.userContext;
   
   return (
   <div sx={{maxHeight: '250px', minHeight: '250'}} style={{margin: '-20px', backgroundColor: 'rgba(0,0,0,0.5)', boxShadow: 2,}}> 
@@ -33,14 +27,14 @@ const UserProfileHeader = (props) => {
         <Grid item xs sx={{marginTop: '50px'}}>
           <Stack direction="row" spacing={2}>
           <Typography variant="h4" style={{color: 'white'}} >
-          {authContext.data.name}
+          {userContext.data.name}
           </Typography>
           <Typography sx={{paddingTop: '14px'}}variant="body1" style={{color: 'GrayText'}} >
-          Member since whenever
+          Member since {userContext.data.dateRegistered}
           </Typography>
           </Stack>
           <Typography sx={{paddingTop: '8px',paddingBottom: '24px'}} variant="body1" style={{color: 'white'}}>
-          Favourited {authContext.data.favourites} things • Logged in via {authContext.data.authProvider}• Email is {authContext.data.email} 
+          Favourited {userContext.favourites.length} things • Logged in via {userContext.data.authProvider}• Email is {userContext.data.email} 
           </Typography>
         </Grid>
         </Grid>

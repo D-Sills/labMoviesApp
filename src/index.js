@@ -6,10 +6,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SiteHeader from './components/siteHeader';
-import AuthenticationContextProvider from "./contexts/authenticationContext";
+import UserContextProvider from "./contexts/userContext";
 import ContentFilteringContextProvider from "./contexts/filteringContext";
-import UserListProvider from "./contexts/userListsContext";
-import AddMovieReviewPage from './pages/addMovieReviewPage';
 import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import MoviesPage from "./pages/moviesPage";
@@ -54,15 +52,13 @@ const App = () => {
     <CssBaseline />
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <AuthenticationContextProvider>
-          <UserListProvider>
+          <UserContextProvider>
           <ContentFilteringContextProvider>
           <SiteHeader theme = {theme} changeTheme={changeTheme} lightMode = {lightTheme}/>    
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/movies/" element={<MoviesPage />} />
                 <Route exact path="/movies/:id" element={<MoviePage />} />
-                <Route path="/reviews/form" element={<AddMovieReviewPage/>} />
               <Route path="/tv/" element={<TVPage />} />
                 <Route exact path="/tv/:id" element={<TVShowPage />} />
               <Route path="/people/" element={<PeoplePage />} />
@@ -71,8 +67,7 @@ const App = () => {
               <Route path="*" element={ <Navigate to="/" /> } />
             </Routes>
           </ContentFilteringContextProvider>
-          </UserListProvider>
-          </AuthenticationContextProvider>
+          </UserContextProvider>
         </BrowserRouter>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

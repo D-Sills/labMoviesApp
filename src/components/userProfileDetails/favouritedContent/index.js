@@ -2,7 +2,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import React from "react";
 import ScrollContainer from 'react-indiana-drag-scroll';
-import CastCard from "../../cards/castCard";
+import TrendingCard from "../../cards/trendingCard";
 
 const FavouritedContent = (props) => {
     let content = props.content;
@@ -11,7 +11,7 @@ const FavouritedContent = (props) => {
     let contentCards = content.map((m) =>  (
         (m.mediaType === type) ?
             <ImageListItem key={m.id} style = {{pointerEvents: 'all'}}sx = {{position: 'relative', }}>
-            <CastCard  key={m.id} content={m} />
+            <TrendingCard  key={m.id} content={m} />
             </ImageListItem>
         : console.log("not of type")
     ));

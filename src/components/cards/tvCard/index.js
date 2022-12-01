@@ -9,8 +9,7 @@ import Typography from "@mui/material/Typography";
 import { format } from 'date-fns';
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { UserLists } from "../../../contexts/userListsContext";
-import { AuthenticationContext } from "../../../contexts/authenticationContext";
+import { UserContext } from "../../../contexts/userContext";
 import img from '../../../images/film-poster-placeholder.png';
 import ContextMenu from "../contextMenu";
 import Menu from "@mui/material/Menu";
@@ -18,8 +17,7 @@ import IconButton from "@mui/material/IconButton";
 import TvTwoToneIcon from '@mui/icons-material/TvTwoTone';
 
 export default function TVCard({ content }) {
-  const userContext = useContext(UserLists)
-  const authContext = useContext(AuthenticationContext);
+  const context = useContext(UserContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -40,6 +38,15 @@ export default function TVCard({ content }) {
     return color;
   }
   
+  const handleFavourite = (e) => {
+    e.preventDefault()
+    if (context.checkIfFav(content, 'tv')) {
+      context.removeFromFavourites(content, 'tv')
+    } else {
+      context.addToFavourites(content, 'tv');
+    }
+  };
+  
   return (
     <Card sx={{ 
     mainWidth: 350, 
@@ -53,9 +60,9 @@ export default function TVCard({ content }) {
     <div style={{ position: "relative" }}>
     <div style={{position: "absolute", top: 10, left: 10,}}>
     {
-      content.favourite ? (
+      context.checkIfFav(content,'tv') ? (
         <IconButton
-        onClick={userContext.addToFavourites(content)}
+        onClick={handleFavourite}
         >
         <Avatar sx={{ backgroundColor: 'red' }}>
           <FavoriteIcon />
@@ -109,9 +116,9 @@ export default function TVCard({ content }) {
       onClose={() => setAnchorEl(null)}
     >
     <ContextMenu
-      userContext = {userContext}
-      authContext = {authContext}
+      userContext = {context}
       content = {content}
+      type = 'tv'
     />
     </Menu>
     </div>

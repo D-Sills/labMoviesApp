@@ -1,29 +1,21 @@
+import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import IconButton from '@mui/material/IconButton';
-import Stack from '@mui/material/Stack';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
-import React, {useEffect, useState} from "react";
-import { logInWithEmailAndPassword, signInWithGoogle } from "../../../../firebase";
-import EmailIcon from '@mui/icons-material/Email';
-import HttpsIcon from '@mui/icons-material/Https';
-import { Typography } from '@mui/material';
-import Grid from "@mui/material/grid";
-import InputAdornment from '@mui/material/InputAdornment';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import GoogleIcon from '@mui/icons-material/Google';
-import { getGenres } from "../../../api/tmdb-api";
-import { useQuery } from "react-query";
 import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/grid";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import React, { useState } from "react";
+import { useQuery } from "react-query";
+import { getGenres } from "../../../../api/tmdb-api";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -38,33 +30,7 @@ const MenuProps = {
 
 function EditDreamMovie(props) {
     const context = props.context;
-    const [showPassword, setVisibility] = useState(false);
-    
-    const { data, error, isLoading, isError } = useQuery({
-        queryKey: ["movie genres"],
-        queryFn: () => getGenres("movie"),
-    });
-    
-    if (isLoading) {
-        return;
-    }
-    
-    if (isError) {
-        return <h1>{error.message}</h1>;
-    }
-    const genres = data.genres;
-    if (genres[0].name === "All"){
-        genres.unshift({ id: "0", name: "N/a" });
-    }
-    
-    const handleClickShowPassword = () => {
-        setVisibility(!showPassword);
-    };
-    const handleMouseDownPassword = (e) => {
-        e.preventDefault();
-    };
-
-    
+    const genreData = props.genres;
 
     return (
     <div>
@@ -73,7 +39,7 @@ function EditDreamMovie(props) {
         <Grid item xs={12}>
         <DialogTitle>
         <Typography variant="h4">
-        {props.value.name}
+        {props.values.name}
         </Typography>
         </DialogTitle>
         </Grid>
@@ -82,32 +48,21 @@ function EditDreamMovie(props) {
         <Grid item xs={12}>
         <TextField sx = {{width: '100%',}}
             value={props.values.name}
-            onChange={(e) => props.setValues.name(e.target.value)}
-            label="Movie Title"
-            type='text'
-        />
-        </Grid>
-        
-        <Grid item xs={12}>
-        <TextField sx = {{width: '100%',}}
-            value={props.values.name}
-            onChange={(e) => props.setValues.name(e.target.value)}
-            label="Movie Title"
-            type='text'
+            onChange={props.setValues('name')}
         />
         </Grid>
         
         <Grid item xs={12}>
         <Stack direction ="row">
-        <FormControl size="small" sx={{margin: 1, minWidth: 220}}>
+        <FormControl size="small" sx={{margin: 1, minWidth: 120}}>
         <InputLabel id="genre-label1">Genre</InputLabel>
         <Select
-            defaultValue="N/a"
-            value={props.values.genres[0]}
-            onChange={(e) => props.setValues.genres[0](e.target.value) }
+            defaultValue=""
+            value={props.genreId[0]}
+            onChange={props.setValues('genres[0]')}
             MenuProps={MenuProps}
             >
-            {genres.map((genre) => {
+            {genreData.map((genre) => {
             return (
                 <MenuItem key={genre.id} value={genre.id}>
                 {genre.name}
@@ -117,15 +72,15 @@ function EditDreamMovie(props) {
         </Select>
         </FormControl>
         
-        <FormControl size="small" sx={{margin: 1, minWidth: 220}}>
+        <FormControl size="small" sx={{margin: 1, minWidth: 120}}>
         <InputLabel id="genre-label2">Genre</InputLabel>
         <Select
-            defaultValue="N/a"
-            value={props.values.genres[1]}
-            onChange={(e) => props.setValues.genres[1](e.target.value) }
+            defaultValue=""
+            value={props.genreId[1]}
+            onChange={props.setValues('genres[1]')}
             MenuProps={MenuProps}
             >
-            {genres.map((genre) => {
+            {genreData.map((genre) => {
             return (
                 <MenuItem key={genre.id} value={genre.id}>
                 {genre.name}
@@ -135,15 +90,15 @@ function EditDreamMovie(props) {
         </Select>
         </FormControl>
         
-        <FormControl size="small" sx={{margin: 1, minWidth: 220}}>
+        <FormControl size="small" sx={{margin: 1, minWidth: 120}}>
         <InputLabel id="genre-label3">Genre</InputLabel>
-        <Select
-            defaultValue="N/a"
-            value={props.values.genres[2]}
-            onChange={(e) => props.setValues.genres[2](e.target.value) }
+        <Select 
+            defaultValue=""
+            value={props.genreId[2]}
+            onChange={props.setValues('genres[2]')}
             MenuProps={MenuProps}
             >
-            {genres.map((genre) => {
+            {genreData.map((genre) => {
             return (
                 <MenuItem key={genre.id} value={genre.id}>
                 {genre.name}
@@ -156,12 +111,12 @@ function EditDreamMovie(props) {
         </Grid>
         
         <Grid item xs={12}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DesktopDatePicker
-                label="Date desktop"
-                inputFormat="MM/DD/YYYY"
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DesktopDatePicker disableMaskedInput={true}
                 value={props.values.releaseDate}
-                onChange={(e) => props.setValues.releaseDate(e.target.value)}
+                label="Release Date"
+                inputFormat="MMM d, yyyy"
+                onChange={props.setValues('releaseDate')}
                 renderInput={(params) => <TextField {...params} />}
             />
         </LocalizationProvider>
@@ -170,20 +125,22 @@ function EditDreamMovie(props) {
         
         <Grid item xs={12}>
         <TextField sx = {{width: '100%',}}
-            value={props.values.company}
-            onChange={(e) => props.setValues.company(e.target.value)}
+            placeholder={props.values.company}
+            onChange={props.setValues('company')}
             label="Production Company"
             type='text'
+            value={props.values.company}
         />
         </Grid>
         
         <Grid item xs={12}>
         <TextField sx = {{width: '100%',}}
-            value={props.values.overview}
+            placeholder={props.values.overview}
             multiline
             maxRows={4}
-            onChange={(e) => props.setValues.overview(e.target.value)}
+            onChange={props.setValues('overview')}
             label="Overview"
+            value={props.values.overview}
             type='text'
         />
         </Grid>

@@ -11,14 +11,12 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthenticationContext } from "../../../contexts/authenticationContext";
-import { UserLists } from "../../../contexts/userListsContext";
+import { UserContext } from "../../../contexts/userContext";
 import img from '../../../images/film-poster-placeholder.png';
 
 export default function CastCard(props ) {
   const content = props.content;
-  const userContext = useContext(UserLists)
-  const authContext = useContext(AuthenticationContext);
+  const userContext = useContext(UserContext)
   
   const getDeptIcon = () => {
     if (content.known_for_department === "Acting")
@@ -28,6 +26,15 @@ export default function CastCard(props ) {
     if (content.known_for_department === "Writing")
       return <EditIcon />;
   }
+  
+  const handleFavourite = (e) => {
+    e.preventDefault()
+    if (userContext.checkIfFav(content, content.media_type)) {
+      userContext.removeFromFavourites(content, content.media_type)
+    } else {
+      userContext.addToFavourites(content, content.media_type);
+    }
+  };
   
   return (
     <Card sx={{
@@ -40,9 +47,9 @@ export default function CastCard(props ) {
     <div style={{ position: "relative" }}>
     <div style={{position: "absolute", top: 10, left: 10,}}>
     {
-      content.favourite ? (
+      userContext.checkIfFav(content,content.media_type) ? (
         <IconButton
-        onClick={userContext.addToFavourites(content)}
+        onClick={handleFavourite}
         >
         <Avatar sx={{ backgroundColor: 'red' }}>
           <FavoriteIcon />

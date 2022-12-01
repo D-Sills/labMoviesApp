@@ -3,15 +3,13 @@ import { useParams } from 'react-router-dom';
 import { getPerson } from '../api/tmdb-api'
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner'
-import { AuthenticationContext } from "../contexts/authenticationContext";
-import { UserLists } from "../contexts/userListsContext";
+import { UserContext } from "../contexts/userContext";
 import Box from "@mui/material/Box";
 import PersonDetails from "../components/personDetails";
 
 const PersonDetailsPage = () => {
   const { id } = useParams();
-  const userContext = useContext(UserLists)
-  const authContext = useContext(AuthenticationContext);
+  const userContext = useContext(UserContext)
   
   const { data: person, error, isLoading, isError } = useQuery(
     ["person", { id: id }],
@@ -29,7 +27,7 @@ const PersonDetailsPage = () => {
   return (
     <Box sx={{maxWidth: '1360px' ,marginLeft: 'auto',
     marginRight: 'auto'}}> 
-        <PersonDetails authContext = {authContext} userContext ={userContext} content={person}/>
+        <PersonDetails userContext ={userContext} content={person}/>
     </Box>
   );
 };

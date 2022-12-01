@@ -1,19 +1,18 @@
 
-import React, { useState, useContext } from "react";
-import { getMovies, getMovie } from "../api/tmdb-api";
+import React, { useContext, useState } from "react";
+import { useQuery } from 'react-query';
+import { getMovies } from "../api/tmdb-api";
 import PageTemplate from '../components/contentListPageTemplate';
-import { useQuery,useQueries } from 'react-query';
 import Spinner from '../components/spinner';
-import AddToFavouritesIcon from '../components/cards/cardIcons/addToFavourites';
 import { ContentFilterContext } from "../contexts/filteringContext";
-import { UserLists } from "../contexts/userListsContext";
+import { UserContext } from "../contexts/userContext";
 
 const MoviesPage = (props) => {
   const context = useContext(ContentFilterContext);
-  const userLists = useContext(UserLists);
+  const userContext = useContext(UserContext);
   const [page, setPage] = useState(1);
 
-  const {  data, error, isLoading, isError, isFetching, isPreviousData, }  = useQuery({
+  const {  data, error, isLoading, isError }  = useQuery({
     queryKey: ["movies", context.categoryFilter, page, context.genreId],
     queryFn: () => getMovies(page, context.categoryFilter, context.genreId),
     keepPreviousData : true
