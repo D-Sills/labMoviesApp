@@ -16,7 +16,7 @@ function DreamMovieContainer(props) {
     const [openMore, setOpenMore] = useState(false);
     
     const { data, error, isLoading, isError } = useQuery({
-        queryKey: ["movie genres"],
+        queryKey: ["dream movie genres"],
         queryFn: () => GetGenres("movie"),
     });
     

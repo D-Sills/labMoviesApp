@@ -47,7 +47,7 @@ const lightTheme = createTheme({
         color: "#B2BAC2",
     },
     h2: {
-        color: "#FF9F45"
+        color: "#143F6B"
     },
     h3: {
         color: "#143F6B"
@@ -59,7 +59,7 @@ const lightTheme = createTheme({
         color: "#143F6B"
     },
     h6: {
-        color: "#FF9F45"
+        color: "#143F6B"
     },
   },
   root: {
@@ -86,29 +86,30 @@ const darkTheme = createTheme({
       main: "#B2BAC2",
     },
     primary: {
-        main: "#FEB139",
+        main: "#fff",
     },
     neutral: {
       main: '#081019',
       contrastText: '#fff',
     },
     basicText: {
-      main: '#143F6B',
+      main: '#fff',
     },
     secondary: {
-        main: "#143F6B"
+        main: "#fff"
     },
     tertiary: {
-        main: "#FFBC80"
+        main: "#143F6B0"
     },
     base: {
         main: "#F55353"
     },
     info: {
-        main: "#FEB139",
+        main: "#fff",
     },
     text: {
-        default: "#FF9F45"
+        primary: "#E3ECF4",
+        default: "#fff"
     },
     shadow: "rgba(118, 118, 118, 0.23)",
     mode: "light",
@@ -116,25 +117,25 @@ const darkTheme = createTheme({
   typography: {
     fontFamily : `"Roboto", sans-serif`,
     body1: {
-        color: "#FF9F45"
+        color: "#fff"
     },
     h1: {
-        color: "#FF9F45"
+        color: "#fff"
     },
     h2: {
-        color: "#FF9F45"
+        color: "#fff"
     },
     h3: {
-        color: "#FF9F45"
+        color: "#fff"
     },
     h4: {
-        color: "#FF9F45"
+        color: "#fff"
     },
     h5: {
-        color: "#129F65"
+        color: "#fff"
     },
     h6: {
-        color: "#FF9F45"
+        color: "#fff"
     },
   },
   root: {

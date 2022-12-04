@@ -132,8 +132,8 @@ export default function TVCard({ content }) {
         outlineOffset: '-1px',
         width: '50px'
         }}>
-        <span><b>{rating}</b><span 
-        style={{fontSize: '60%', verticalAlign: 'top'}}>
+        <span style={{color: 'white'}}><b>{rating}</b><span 
+        style={{color: 'white', fontSize: '60%', verticalAlign: 'top'}}>
         %</span></span>
         </Avatar>
     </div>
