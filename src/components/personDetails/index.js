@@ -15,6 +15,7 @@ import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Button from "@mui/material/Button";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import AddToCast from "../addToCast";
 
 const PersonDetails = (props) => {
@@ -49,9 +50,7 @@ const PersonDetails = (props) => {
     }
   };
   
-  const checkIfInDream = () => {
-    return true;
-  }
+
   
   return (
   <Box sx={{flexGrow: 1}}>
@@ -98,13 +97,14 @@ const PersonDetails = (props) => {
         </IconButton>
       }
       
-      { checkIfInDream() ?
-      <Button sx={{margin:-3,padding: '10px'}}onClick={() => setOpenMore(true)} variant="outlined" startIcon={<PersonAddIcon />} size = "small">
-      Add to Dream Movie!
+      { context.checkIfInCast(content) ?
+      <Button sx={{margin:-3,padding: '10px'}}onClick={() => context.removeFromCast(content.id, content.name)}
+      variant="text" startIcon={<PersonRemoveIcon />} size = "small">
+      Remove from Dream Movie!
       </Button>
       :
-      <Button sx={{margin:-3,padding: '10px'}}onClick={() => setOpenMore(true)} variant="outlined" startIcon={<PersonAddIcon />} size = "small">
-      Remove from Dream Movie!
+      <Button sx={{margin:-3,padding: '10px'}}onClick={() => setOpenMore(true)} variant="text" startIcon={<PersonAddIcon />} size = "small">
+      Add to Dream Movie!
       </Button>
       }
       

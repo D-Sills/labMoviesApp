@@ -7,6 +7,7 @@ import React from "react";
 
 const UserProfileHeader = (props) => {
   const userContext = props.userContext;
+  let fav = [...userContext.favourites];
   
   return (
   <div sx={{maxHeight: '250px', minHeight: '250'}} style={{margin: '-20px', backgroundColor: 'rgba(0,0,0,0.5)', boxShadow: 2,}}> 
@@ -30,11 +31,11 @@ const UserProfileHeader = (props) => {
           {userContext.data.name}
           </Typography>
           <Typography sx={{paddingTop: '14px'}}variant="body1" style={{color: 'GrayText'}} >
-          Member since
+          Member since {userContext.data.dateRegistered}
           </Typography>
           </Stack>
           <Typography sx={{paddingTop: '8px',paddingBottom: '24px'}} variant="body1" style={{color: 'white'}}>
-          Favourited things • Logged in via {userContext.data.authProvider}• Email is {userContext.data.email} 
+          Favourited {fav.length} things • Logged in via {userContext.data.authProvider} • Email is {userContext.data.email} 
           </Typography>
         </Grid>
         </Grid>

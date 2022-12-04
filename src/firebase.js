@@ -18,7 +18,7 @@ import {
   doc, 
   setDoc,
 }from "firebase/firestore";
-
+import { format } from 'date-fns';
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDacqXn4NeSOY17OWdEnJmUrIjqfNha2nQ",
@@ -37,6 +37,9 @@ const db = getFirestore(app);
 /*--------------------------------------------------------------------
 |  Authentication
 *-------------------------------------------------------------------*/
+const dateFormat = 'dd/MM/yyyy';
+const today = format( new Date(), dateFormat );
+
 const googleProvider = new GoogleAuthProvider();
 const signInWithGoogle = async () => {
   try {
@@ -50,7 +53,7 @@ const signInWithGoogle = async () => {
         name: user.displayName,
         authProvider: "google",
         email: user.email,
-        dateRegistered: new Date(),
+        dateRegistered: today,
       });
     }
   } catch (err) {
@@ -77,7 +80,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       name,
       authProvider: "local",
       email,
-      dateRegistered: new Date(),
+      dateRegistered: today,
     });
   } catch (err) {
     console.error(err);

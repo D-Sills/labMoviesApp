@@ -3,8 +3,11 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db, logout } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { query, deleteDoc, doc, setDoc, collection, getDocs, where } from "firebase/firestore";
+import { format } from 'date-fns';
 
 export const UserContext = React.createContext();
+const dateFormat = 'dd/MM/yyyy';
+const today = format( new Date(), dateFormat );
 
 const UserContextProvider = (props) => {
     const [user, loading, error] = useAuthState(auth);
@@ -18,7 +21,7 @@ const UserContextProvider = (props) => {
     const [dreamMovieCompany, setDreamMovieCompany] = useState('');
     const [dreamMovieImagePath, setDreamMovieImagePath] = useState('');
     const [dreamMovieOverview, setDreamMovieOverview] = useState('');
-    const [dreamMovieReleaseDate, setDreamMovieReleaseDate] = useState(new Date());
+    const [dreamMovieReleaseDate, setDreamMovieReleaseDate] = useState(today);
     const [dreamMovieGenres, setDreamMovieGenres] = useState(['0','0','0']);
     const [dreamMovieCast, setDreamMovieCast] = useState([]);
 
@@ -41,18 +44,20 @@ const UserContextProvider = (props) => {
                 const docRef = doc(db, "users", user.uid,);
                 const colRef = collection(docRef, "favourites");
                 const favs = await getDocs(colRef);
-                let tmp = [];
-                favs.forEach((doc) => {
-                    tmp.push(doc.data()); // "doc1", "doc2" and "doc3"
-                });
-                console.log(tmp) 
-                setFavourites(tmp);
-                
+                if (favs.docs.length > 0) {
+                    let tmp = [];
+                    favs.forEach((doc) => {
+                        tmp.push(doc.data()); // "doc1", "doc2" and "doc3"
+                    });
+                    console.log(tmp) 
+                    setFavourites(tmp);
+                }
                 //dreamMovie
                 const setDreamMovieValues = async () => {
                     const docRef2 = doc(db, "users", user.uid,);
                     const colRef2 = collection(docRef2, "dreamMovies");
                     const dream = await getDocs(colRef2);
+                    if (dream.docs.length > 0) {
                     const dreamData = dream.docs[0].data();
                     setDreamMovieName(dreamData.name);
                     setDreamMovieReleaseDate(dreamData.releaseDate);
@@ -62,7 +67,8 @@ const UserContextProvider = (props) => {
                     setDreamMovieGenres(dreamData.genres);
                     setDreamMovieCast(dreamData.cast); //not efficient lol
                     console.log(dreamData)
-                };
+                    };
+                }
                 setDreamMovieValues();
             } catch (err) {
                 console.error(err);
@@ -158,44 +164,63 @@ const UserContextProvider = (props) => {
     /*--------------------------------------------------------------------
     |  Dream Movie
     *-------------------------------------------------------------------*/
-    const saveDreamMovieValues = async () => {
-        try {
-            const docRef = doc(db, "users", user.uid,);
-            const colRef = collection(docRef, "dreamMovies");
-            await setDoc(doc(colRef,"DreamMoviePog"), {
-                name: dreamMovieName,
-                imagePath: dreamMovieImagePath,
-                company: dreamMovieCompany,
-                releaseDate: dreamMovieReleaseDate,
-                genres: dreamMovieGenres,
-                overview: dreamMovieOverview,
-                cast: dreamMovieCast
-            });
-        } catch (err) {
-            console.error(err);
+    const setDreamMovieValues = async (name_ = dreamMovieName, releaseDate_ = dreamMovieReleaseDate, imagePath_ = setDreamMovieImagePath,
+                                overview_ = dreamMovieOverview, company_ = dreamMovieCompany, genres_ = dreamMovieGenres, cast_ = dreamMovieCast) => {
+        const data = {
+            cast: cast_,
+            company: company_,
+            genres: genres_,
+            imagePath: imagePath_,
+            name: name_,
+            overview: overview_,
+            releaseDate: releaseDate_,
+        }
+        const docRef = doc(db, "users", user.uid,);
+        const colRef = collection(docRef, "dreamMovies");
+        await setDoc(doc(colRef,"DreamMoviePog"), data);
+        
+        setDreamMovieName(data.name);
+        setDreamMovieReleaseDate(data.releaseDate);
+        setDreamMovieImagePath(data.imagePath);
+        setDreamMovieOverview(data.overview);
+        setDreamMovieCompany(data.company);
+        setDreamMovieGenres(data.genres);
+        setDreamMovieCast(data.cast);
+    };
+    
+    const addToCast = async (actor) => {
+        if (dreamMovieCast.includes(actor)) {
+            alert("Already added this actor");
             return;
         }
-    };
-    
-    const setDreamMovieValues = (name, releaseDate, imagePath,
-                                overview, company, genres, cast) => {
-        setDreamMovieName(name);
-        setDreamMovieReleaseDate(releaseDate);
-        setDreamMovieImagePath(imagePath);
-        setDreamMovieOverview(overview);
-        setDreamMovieCompany(company);
-        setDreamMovieGenres(genres);
-        setDreamMovieCast(cast);
-        saveDreamMovieValues();
-    };
-    
-    const addToCast = (actor) => {
         let newCast = [...dreamMovieCast];
         newCast.push(actor);
-        setDreamMovieCast(newCast);
-        console.log(dreamMovieCast);
-        saveDreamMovieValues();
+        setDreamMovieValues(dreamMovieName, dreamMovieReleaseDate,
+            dreamMovieImagePath, dreamMovieOverview, dreamMovieCompany,
+            dreamMovieGenres, newCast);
     };
+    
+    const removeFromCast = (id , name) => {
+        let newCast = dreamMovieCast.filter(
+            (obj) => (obj.id) !== id
+        );
+        console.log(newCast);
+        alert(`Removing ${name}`)
+        setDreamMovieValues(dreamMovieName, dreamMovieReleaseDate,
+        dreamMovieImagePath, dreamMovieOverview, dreamMovieCompany,
+        dreamMovieGenres, newCast);
+    };
+    
+    const checkIfInCast = (content) => {
+        let i = 0;
+        dreamMovieCast.forEach(element => {
+            if (element.id === content.id) {
+            i++;
+            }
+        });
+        if (i === 0) return false;
+        else return true;
+    }
     
     return (
     <UserContext.Provider
@@ -219,6 +244,8 @@ const UserContextProvider = (props) => {
         setFavourites,
         checkIfFav,
         addToCast,
+        removeFromCast,
+        checkIfInCast,
         dreamMovieName,
         dreamMovieReleaseDate,
         dreamMovieImagePath,

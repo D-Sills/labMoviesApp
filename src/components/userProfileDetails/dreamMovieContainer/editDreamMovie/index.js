@@ -15,6 +15,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import React, { useState } from "react";
 import DialogActions from '@mui/material/DialogActions';
+import { format } from 'date-fns';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -26,6 +27,8 @@ const MenuProps = {
     },
     },
 };
+const dateFormat = 'dd/MM/yyyy';
+const today = format( new Date(), dateFormat );
 
 function EditDreamMovie(props) {
     const context = props.context;
@@ -33,18 +36,29 @@ function EditDreamMovie(props) {
     const [dreamMovieCompany, setDreamMovieCompany] = useState('');
     const [dreamMovieImagePath, setDreamMovieImagePath] = useState('');
     const [dreamMovieOverview, setDreamMovieOverview] = useState('');
-    const [dreamMovieReleaseDate, setDreamMovieReleaseDate] = useState(new Date());
+    const [dreamMovieReleaseDate, setDreamMovieReleaseDate] = useState(today);
     const [dreamMovieGenres, setDreamMovieGenres] = useState(['0','0','0']);
-    const [dreamMovieCast, setDreamMovieCast] = useState([]);
     const genreData = props.genres;
 
+    function onChangeDate( dateObject ) {
+        // date format is case sensitive!
+        let formattedDateString = format( dateObject, dateFormat );
+        setDreamMovieReleaseDate( formattedDateString );
+    }
+    
+    function onChangeGenre(index, name) {
+        let genres = [...dreamMovieGenres];
+        genres[index] = name;
+        setDreamMovieGenres(genres);
+    }
+    
     return (
     <div>
     <Grid sx = {{position: 'flex', align: 'center'}} container spacing={2}>
     <Dialog open={props.open} onClose={() => props.setOpen(false)}>
         <Grid item xs={12}>
         <DialogTitle>
-        <Typography variant="h4">
+        <Typography variant="h4" component="h2">
         {context.dreamMovieName}
         </Typography>
         </DialogTitle>
@@ -53,8 +67,10 @@ function EditDreamMovie(props) {
         <DialogContent>
         <Grid item xs={12}>
         <TextField sx = {{width: '100%',}}
+            label="Movie Title"
             value={dreamMovieName}
             onChange={(e) => setDreamMovieName(e.target.value)}
+            type='text'
         />
         </Grid>
         
@@ -65,7 +81,7 @@ function EditDreamMovie(props) {
         <Select
             defaultValue=""
             value={dreamMovieGenres[0]}
-            
+            onChange={(e) => onChangeGenre(0,e.target.value)}
             MenuProps={MenuProps}
             >
             {genreData.map((genre) => {
@@ -83,7 +99,7 @@ function EditDreamMovie(props) {
         <Select
             defaultValue=""
             value={dreamMovieGenres[1]}
-            
+            onChange={(e) => onChangeGenre(1,e.target.value)}
             MenuProps={MenuProps}
             >
             {genreData.map((genre) => {
@@ -100,6 +116,7 @@ function EditDreamMovie(props) {
         <InputLabel id="genre-label3">Genre</InputLabel>
         <Select 
             defaultValue=""
+            onChange={(e) => onChangeGenre(2,e.target.value)}
             value={dreamMovieGenres[2]}
             MenuProps={MenuProps}
             >
@@ -119,7 +136,9 @@ function EditDreamMovie(props) {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DesktopDatePicker disableMaskedInput={true}
                 value={dreamMovieReleaseDate}
-                onChange={(e) => setDreamMovieReleaseDate(e.target.value)}
+                onChange={onChangeDate}
+                views={ [ 'year', 'month', 'day' ] }
+                    allowSameDateSelection={ true }
                 label="Release Date"
                 inputFormat="MMM d, yyyy"
                 renderInput={(params) => <TextField {...params} />}
@@ -165,10 +184,13 @@ function EditDreamMovie(props) {
         
         <DialogActions>
             <Button onClick={() => props.setOpen(false)}>Cancel</Button>
-            <Button onClick={() => context.setDreamMovieValues(
+            <Button onClick={() => {
+            context.setDreamMovieValues(
             dreamMovieName, dreamMovieReleaseDate, dreamMovieImagePath, dreamMovieOverview,
-            dreamMovieCompany, dreamMovieGenres, dreamMovieCast
-            )}>
+            dreamMovieCompany, dreamMovieGenres
+            );
+            props.setOpen(false);
+            }}>
             Update Details
             </Button>
         </DialogActions>

@@ -1,4 +1,4 @@
-import EmailIcon from '@mui/icons-material/Email';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -13,6 +13,7 @@ import React, {useState} from "react";
 function AddToCast(props) {
     const context = props.context;
     const [name, setName] = useState("");
+    
     
     return (
     <div>
@@ -31,7 +32,7 @@ function AddToCast(props) {
         <TextField sx = {{width: '100%',}} InputProps={{
             startAdornment: (
             <InputAdornment position="start">
-                <EmailIcon />
+                <AccountCircleIcon />
             </InputAdornment>
             ),
             }}
@@ -48,12 +49,13 @@ function AddToCast(props) {
             <Button onClick={() => props.setOpen(false)}>Cancel</Button>
             <Button onClick={() => {
             const obj = {
-            id: props.actor.id,
-            name: props.actor.name,
-            character: name,
-            imagePath: props.actor.profile_path,
-        };
-        context.addToCast(obj);
+                id: props.actor.id,
+                name: props.actor.name,
+                character: name,
+                imagePath: props.actor.profile_path,
+            };
+            context.addToCast(obj);
+            props.setOpen(false);
     }}>Add to movie</Button>
         </DialogActions>
         
