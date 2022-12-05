@@ -34,6 +34,7 @@ const UserContextProvider = (props) => {
         const fetchUserData = async () => {
             try {
                 //userData
+                await new Promise(r => setTimeout(r, 1000));
                 const q = query(collection(db, "users"), where("uid", "==", user?.uid));
                 const doc2 = await getDocs(q);
                 const data2 = doc2.docs[0].data();
