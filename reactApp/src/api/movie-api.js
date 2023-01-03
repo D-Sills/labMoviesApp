@@ -56,11 +56,3 @@ export const getUpcomingMovies = async() => {
   }
   ).then(res => res.json());
 };
-
-export const getInCinema = async() => {
-  return fetch(
-      '/api/now-playing',{headers: {'Authorization': window.localStorage.getItem('token')
-    }
-  }
-  ).then(res => res.json());
-};

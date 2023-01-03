@@ -1,9 +1,9 @@
-//same as movieModel.js
 import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-const TopRatedMoviesSchema = new Schema({
+
+const TopMovieSchema = new Schema({
   adult: { type: Boolean },
   id: { type: Number, required: true, unique: true },
   poster_path: { type: String },
@@ -31,10 +31,10 @@ const TopRatedMoviesSchema = new Schema({
   tagline: { type: String }
 });
 
-TopRatedMoviesSchema.statics.findByMovieDBId = function (id) {
+TopMovieSchema.statics.findByMovieDBId = function (id) {
   return this.findOne({ id: id });
 };
 
-export default mongoose.model('TopRatedMovies', TopRatedMoviesSchema);
+export default mongoose.model('Top Movies', TopMovieSchema);
 
 

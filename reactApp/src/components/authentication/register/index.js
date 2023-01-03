@@ -37,6 +37,7 @@ function RegisterModal(props) {
     context.setName(name);
     context.setEmail(email);
     context.setPassword(password);
+    context.register(name, password);
     if (!context.name) alert("Please enter name");
         registerWithEmailAndPassword(context.name, context.email, context.password);
     };

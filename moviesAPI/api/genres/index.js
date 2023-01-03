@@ -1,10 +1,11 @@
 import express from 'express';
-import Genre from './genreModel';
+import { genres } from './genresData';
+import uniqid from 'uniqid'
 
 const router = express.Router(); 
-router.get('/', async (req, res) => {
-    const genres = await Genre.find();
-    res.status(200).json(genres);
+
+router.get('/',(req, res) => {
+    res.json(genres);
 });
 
 export default router;
