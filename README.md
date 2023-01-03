@@ -4,86 +4,132 @@ Name: Darren Sills
 
 ## Features.
 
-[A bullet-point list of the ADDITIONAL features/endpoints you have implemented in the API **THAT WERE NOT IN THE LABS** ]. 
+ + Feature 1 - New API Routes
 
- + Feature 1 - .... a statement of its purpose/objective ..... 
+ + Feature 2 - Mongo Integration for top,upcoming and now playing movies
 
- + Feature 2 - .......
-
- + Feature 3 - ......
-
-   e.g.
-
- + Get Similar Movies:  Get a list of similar movies using a movie ID. 
+ + Feature 3 - Mongo Integration for users and authentication using those details, instead of firebase used in previous assignment 
 
 ## Installation Requirements
 
-Describe what needs to be on the machine to run the API (Node v?, NPM, MongoDB instance, any other 3rd party software not in the package.json). 
-
-Describe getting/installing the software, perhaps:
-
 ```bat
-git clone http:\myrepo.git
+git clone https://github.com/D-Sills/labMoviesApp
 ```
 
 followed by installation
 
 ```bat
-git install
+
+cd moviesAPI
+npm install
+
+cd reactApp
+npm install
+
 ```
 
 ## API Configuration
-Describe any configuration that needs to take place before running the API. For example, creating an ``.env`` and what variables to put in it. Give an example of how this might be structured/done.
-**REMEMBER: DON'T PUT YOUR OWN USERNAMES/PASSWORDS/AUTH KEYS IN THE README OR ON GITHUB,** just placeholders as indicated below:
+The .env should look the following:
 
 ```bat
-NODE_ENV=development
-PORT=8080
-HOST=
-mongoDB=YourMongoURL
-seedDb=true
-secret=YourJWTSecret
-```
 
+REACT_APP_TMDB_KEY=<TMDBKey>
+FAST_REFRESH=false
+MONGO_DB=mongodb+srv://<MongoUsername>:<MongoPassword>@<ClusterName>.h8fjzov.mongodb.net/?retryWrites=true&w=majority
+SECRET=ilikecake
+seedDb=true
+DANGEROUSLY_DISABLE_HOST_CHECK=true
+
+```
+I have no idea what DANGEROUSLY_DISABLE_HOST_CHECK does but the app crashes after adding the new API stuff if I don't use it.
 
 ## API Design
-Give an overview of your web API design, perhaps similar to the following: 
 
 |  |  GET | POST | PUT | DELETE
 | -- | -- | -- | -- | -- 
 | /api/movies |Gets a list of movies | N/A | N/A |
 | /api/movies/{movieid} | Get a Movie | N/A | N/A | N/A
 | /api/movies/{movieid}/reviews | Get all reviews for movie | Create a new review for Movie | N/A | N/A  
-| ... | ... | ... | ... | ...
-
-If you have your API design on an online platform or graphic, please link to it (e.g. [Swaggerhub](https://app.swaggerhub.com/)).
+| /api/upcomming | Gets upcoming movies | N/A | N/A | N/A
+| /api/top | Gets top movies | N/A | N/A | N/A
+| /api/now-playing | Gets movies that are currently in cinemas | N/A | N/A | N/A
+| /api/users | Gets users | user log in | N/A | N/A
+| /api/users?action=register | N/A | registers a user to the DB | N/A | N/A
 
 
 ## Security and Authentication
-Give details of authentication/ security implemented on the API(e.g. passport/sessions). Indicate which routes are protected. **REMEMBER: DON'T PUT YOUR OWN USERNAMES/PASSWORDS/AUTH KEYS IN THE README OR ON GITHUB**
+
+Json Web Tokens are used to authenticate users. 
+
+All routes outlined in the index.js file of the src folder should be private aside from the sign up and login routes.
 
 ## Integrating with React App
 
-Describe how you integrated your React app with the API. Perhaps link to the React App repo and give an example of an API call from React App. For example: 
-
 ~~~Javascript
-export const getMovies = () => {
+export const login = async(username, password) => {
+  return fetch('/api/users', {
+      method: 'POST',
+      body: JSON.stringify({username: username, password:password }),
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  })
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+};
+
+export const signup = async(username, password) => {
+  return fetch('/api/users?action=register', {
+      method: 'POST',
+      body: JSON.stringify({username: username, password: password }),
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  })
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+}
+
+export const getMovies = async() => {
   return fetch(
-     '/api/movies',{headers: {
-       'Authorization': window.localStorage.getItem('token')
+      '/api/movies',{headers: {'Authorization': window.localStorage.getItem('token')
     }
   }
-  )
-    .then(res => res.json())
-    .then(json => {return json.results;});
+  ).then(res => res.json());
+};
+
+export const getGenres = async() => {
+  return fetch(
+      '/api/genres',{headers: {'Authorization': window.localStorage.getItem('token')
+    }
+  }
+  ).then(res => res.json());
+};
+
+export const getTopMovies = async() => {
+  return fetch(
+      '/api/top',{headers: {'Authorization': window.localStorage.getItem('token')
+    }
+  }
+  ).then(res => res.json());
+};
+
+export const getUpcomingMovies = async() => {
+  return fetch(
+      '/api/upcomming',{headers: {'Authorization': window.localStorage.getItem('token')
+    }
+  }
+  ).then(res => res.json());
 };
 
 ~~~
 
 ## Extra features
 
-. . Briefly explain any non-standard features, functional or non-functional, developed for the app.  
+None
 
 ## Independent learning.
 
-. . State the non-standard aspects of React/Express/Node (or other related technologies) that you researched and applied in this assignment . .  
+None
