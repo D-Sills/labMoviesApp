@@ -3,6 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db, logout } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { query, deleteDoc, doc, setDoc, collection, getDocs, where } from "firebase/firestore";
+import { login, signup } from "../api/movie-api";
 import { format } from 'date-fns';
 
 export const UserContext = React.createContext();
@@ -10,6 +11,36 @@ const dateFormat = 'dd/MM/yyyy';
 const today = format( new Date(), dateFormat );
 
 const UserContextProvider = (props) => {
+    const existingToken = localStorage.getItem("token");
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [authToken, setAuthToken] = useState(existingToken);
+    const [userName, setUserName] = useState("");
+
+    //Function to put JWT token in local storage.
+    const setToken = (data) => {
+        localStorage.setItem("token", data);
+        setAuthToken(data);
+    }
+
+    const authenticate = async (username, password) => {
+        const result = await login(username, password);
+        if (result.token) {
+        setToken(result.token)
+        setIsAuthenticated(true);
+        setUserName(username);
+        }
+    };
+    
+    const register = async (username, password) => {
+        const result = await signup(username, password);
+        console.log(result.code);
+        return (result.code == 201) ? true : false;
+    };
+    
+    const signout = () => {
+        setTimeout(() => setIsAuthenticated(false), 100);
+    }
+    
     const [user, loading, error] = useAuthState(auth);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -254,7 +285,12 @@ const UserContextProvider = (props) => {
         dreamMovieCompany,
         dreamMovieGenres,
         dreamMovieCast,
-        setDreamMovieValues
+        setDreamMovieValues,
+        isAuthenticated,
+        authenticate,
+        register,
+        signout,
+        userName
         }}
     >
     {props.children}

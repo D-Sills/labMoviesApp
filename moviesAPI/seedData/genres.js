@@ -1,4 +1,5 @@
-const genres = [
+// eslint-disable-next-line no-unused-vars
+const genres= [
     {
         "id": 28,
         "name": "Action"
@@ -16,5 +17,3 @@ const genres = [
         "name": "Comedy"
     }
 ];
-
-export default genres;

@@ -8,7 +8,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SiteHeader from './components/siteHeader';
 import UserContextProvider from "./contexts/userContext";
 import ContentFilteringContextProvider from "./contexts/filteringContext";
-import HomePage from "./pages/homePage";
+import HomePage from "./pages/HomePage";
 import MoviePage from "./pages/movieDetailsPage";
 import MoviesPage from "./pages/moviesPage";
 import PeoplePage from "./pages/peoplePage";

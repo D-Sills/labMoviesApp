@@ -1,121 +1,89 @@
-# Web App Dev 2 - Assignment 1 - ReactJS app
+# Assignment 2 - Web API.
 
-Name: **Darren Sills**
+Name: Darren Sills
 
-## Overview
+## Features.
 
-### New Pages
+[A bullet-point list of the ADDITIONAL features/endpoints you have implemented in the API **THAT WERE NOT IN THE LABS** ]. 
 
-+ Home Page 
-    + Universal Search
-    + Trending Content List (Day/week toggle)
-+ (Modified) TV/Movies List Pages
-    + Remade Cards (include rating and context menu)
-    + Filter content by category(Top Rated, Newest, etc.)
-    + Pagination
-+ (Modified) TV/Movies Details Page
-    + Complete New UI
-    + Displays Top Cast
-    + Reviews displayed via MUI dialogue instead of separate page
-+ Actors List Page
-    + Cards display most noteworthy movies under name
-+ Actors Details Page
-    + Best known movies they've had a part in displayed
-    + Can add to dream movie here
-+ User Profile Page
-    + Displays some data about the user (date registered, number of favourites, etc.)
-    + Displays the user's favourites as categorised lists
-    + Dream movie editing
-    
-### New Features
+ + Feature 1 - .... a statement of its purpose/objective ..... 
 
-+ Authentication (using Firebase)
-+ Backend Persistence (using Firestore)
-+ Sort content lists by category (Top Rated, Newest, etc.)
-+ Rating display on card
-+ Context menu on card to add to favourites
-+ Full pagination
-+ Dark/night mode toggle
-+ Universal website search on home page
-+ Toggle daily/weekly trending display on home page
-+ List of categorised favourites on profile page
-+ Create your dream movie
-    + Can set all movie details
-    + Can add cast members
+ + Feature 2 - .......
+
+ + Feature 3 - ......
+
+   e.g.
+
+ + Get Similar Movies:  Get a list of similar movies using a movie ID. 
+
+## Installation Requirements
+
+Describe what needs to be on the machine to run the API (Node v?, NPM, MongoDB instance, any other 3rd party software not in the package.json). 
+
+Describe getting/installing the software, perhaps:
+
+```bat
+git clone http:\myrepo.git
+```
+
+followed by installation
+
+```bat
+git install
+```
+
+## API Configuration
+Describe any configuration that needs to take place before running the API. For example, creating an ``.env`` and what variables to put in it. Give an example of how this might be structured/done.
+**REMEMBER: DON'T PUT YOUR OWN USERNAMES/PASSWORDS/AUTH KEYS IN THE README OR ON GITHUB,** just placeholders as indicated below:
+
+```bat
+NODE_ENV=development
+PORT=8080
+HOST=
+mongoDB=YourMongoURL
+seedDb=true
+secret=YourJWTSecret
+```
 
 
-## Setup requirements
+## API Design
+Give an overview of your web API design, perhaps similar to the following: 
 
-Install Node.js if you don't have it, then open up a command prompt / terminal in the project directory.
+|  |  GET | POST | PUT | DELETE
+| -- | -- | -- | -- | -- 
+| /api/movies |Gets a list of movies | N/A | N/A |
+| /api/movies/{movieid} | Get a Movie | N/A | N/A | N/A
+| /api/movies/{movieid}/reviews | Get all reviews for movie | Create a new review for Movie | N/A | N/A  
+| ... | ... | ... | ... | ...
 
-Run 'npm install' to install dependencies, then 'npm start' to start the application.
+If you have your API design on an online platform or graphic, please link to it (e.g. [Swaggerhub](https://app.swaggerhub.com/)).
 
-## TMDB endpoints
 
-+ /movies/{movie_id}/reviews - The user reviews of a movie.
-+ /movie/{movie_id}/similar - A list of similar movies. 
-+ /movie/{movie_id}/cast - A list of movie cast members. 
-+ /tv/{category} - A list tv shows in the category.
-+ /tv/{tv_id} - Details on the tv show.
-+ /tv/{tv_id}/cast - A list of tv cast members.
-+ /tv/{tv}/reviews - The user reviews of a tv.
-+ /person/popular - A list of popular actors.
-+ /person/{person_id} - Details on the actor.
-+ /person/{person_ id}/combined_credits - A list of content the actor has featured in
-+ /trending/all/{time} - A list of trending content
-+ /search/all/{query} - Search the database for the query
+## Security and Authentication
+Give details of authentication/ security implemented on the API(e.g. passport/sessions). Indicate which routes are protected. **REMEMBER: DON'T PUT YOUR OWN USERNAMES/PASSWORDS/AUTH KEYS IN THE README OR ON GITHUB**
 
-## App Design
+## Integrating with React App
 
-### Component catalogue
+Describe how you integrated your React app with the API. Perhaps link to the React App repo and give an example of an API call from React App. For example: 
 
-![](src/images/stories.png)
+~~~Javascript
+export const getMovies = () => {
+  return fetch(
+     '/api/movies',{headers: {
+       'Authorization': window.localStorage.getItem('token')
+    }
+  }
+  )
+    .then(res => res.json())
+    .then(json => {return json.results;});
+};
 
-### UI Design
+~~~
 
-![ ](src/images/homePage.png)
-![ ](src/images/searchBar.png)
+## Extra features
 
->Shows the web app home page. Tending toggle swaps between weekly/daily trending. Can search the database for with any query as shown above. (The banner image is placeholder)
+. . Briefly explain any non-standard features, functional or non-functional, developed for the app.  
 
-![ ](src/images/moviesPage.png)
+## Independent learning.
 
->Shows a categorised, paged list of all movies in the database.
-
-![ ](src/images/tvPage.png)
-
->Shows a categorised, paged list of all tv shows in the database.
-
-![ ](src/images/movieDetailsPage.png)
-
->Page is the same for tv shows. Shows detailed information on the content. Scrolling down reveals a review section.
-
-![ ](src/images/actorPage.png)
-
->Shows a categorised, paged list of all actors in the database. (Dark mode shown here)
-
-![ ](src/images/actorDetails.png)
-
->Shows the actors details, list of movies they're most known for and the add to dream movie button/modal you can see above.
-
-![ ](src/images/userPage.png)
-
->Shows the user's details including favourites in accordion components, and the edit dream movie section.
-
-### Routing
-
-+ / - home page with search and trending.
-+ /tv/ - displays a list tv shows.
-+ /tv/:id/ - shows details about the tv show.
-+ /people/ - shows a list of people (Actors/directors)
-+ /people/:id/ - a persons details.
-+ /user/:uid/ - (protected) displays the current user's details.
-
-## Independent learning
-
-Mostly just used official documentation. MUI, Firebase and the TMDB API all have great documentation.
-+ https://mui.com/material-ui/getting-started/overview/
-+ https://firebase.google.com/docs
-+ https://developers.themoviedb.org/3/getting-started/introduction
-
-Other helpful sources would be various Stack Overflow posts or questions on the TMDB page that I wouldn't be able to find again at this point.
+. . State the non-standard aspects of React/Express/Node (or other related technologies) that you researched and applied in this assignment . .  
